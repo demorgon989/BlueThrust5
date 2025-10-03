@@ -40,7 +40,7 @@ class Basic {
 
 		$returnVal = false;
 		if (!$numericIDOnly) {
-			$intIDNum = $this->MySQL->real_escape_string($intIDNum);
+			$intIDNum = $this->MySQL->real_escape_string($intIDNum ?? '');
 			$checkID = true;
 		} else {
 			$checkID = is_numeric($intIDNum);
