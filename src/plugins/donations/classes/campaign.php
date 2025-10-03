@@ -290,10 +290,14 @@ public function getCurrencySymbol() {
 $returnVal = [];
 if ($this->intTableKeyValue != "") {
 require_once(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
-$blnSymbolLeft = $arrPaypalCurrencyInfo[$this->arrObjInfo['currency']]['position'] == "left";
-$blnSymbolRight = $arrPaypalCurrencyInfo[$this->arrObjInfo['currency']]['position'] == "right";
-$returnVal['left'] = ($blnSymbolLeft) ? $arrPaypalCurrencyInfo[$this->arrObjInfo['currency']]['symbol'] : "";
-$returnVal['right'] = ($blnSymbolRight) ? $arrPaypalCurrencyInfo[$this->arrObjInfo['currency']]['symbol'] : "";
+$currency = $this->arrObjInfo['currency'] ?? 'USD';
+$arrPaypalCurrencyInfo = $arrPaypalCurrencyInfo ?? [];
+$defaultCurrency = ['symbol' => '$', 'position' => 'left'];
+$currencyInfo = $arrPaypalCurrencyInfo[$currency] ?? $arrPaypalCurrencyInfo['USD'] ?? $defaultCurrency;
+$blnSymbolLeft = ($currencyInfo['position'] ?? 'left') == "left";
+$blnSymbolRight = ($currencyInfo['position'] ?? 'left') == "right";
+$returnVal['left'] = ($blnSymbolLeft) ? ($currencyInfo['symbol'] ?? '$') : "";
+$returnVal['right'] = ($blnSymbolRight) ? ($currencyInfo['symbol'] ?? '$') : "";
 }
 return $returnVal;
 }
