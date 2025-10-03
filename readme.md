@@ -1,4 +1,8 @@
-# BlueThrust Clan Scripts v5
+﻿# BlueThrust Clan Scripts v5
+
+##  Quick Start with Docker
+
+**New!** Want to get BlueThrust5 running quickly with Docker? Check out our comprehensive [Docker Installation Guide](DOCKER_INSTALL.md) for step-by-step instructions!
 
 ## Download Link
 
@@ -21,13 +25,13 @@ If you like this fork or found it useful, please consider leaving us a star. It 
 
 - [Technical Debt](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aclosed+label%3Atechnical-debt)
     - Fix PHP warnings
-	- Reduce # of SQL queries
-	- Lint the code
-	- Create developer documentation - see [the wiki](https://github.com/RedDragonWebDesign/BlueThrust5/wiki)
+    - Reduce # of SQL queries
+    - Lint the code
+    - Create developer documentation - see [the wiki](https://github.com/RedDragonWebDesign/BlueThrust5/wiki)
 - [Fix v4 Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aissue+label%3Abug-v4+is%3Aclosed)
-	- Fix broken page "Add Menu Item"
-	- Fix forum advanced search
-	- (couple of others)
+    - Fix broken page "Add Menu Item"
+    - Fix forum advanced search
+    - (couple of others)
 - [Small Features](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aclosed+label%3Asmall-feature)
 - [Big Features](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=label%3Abig-feature+is%3Aclosed) - None yet. Any suggestions?
 
