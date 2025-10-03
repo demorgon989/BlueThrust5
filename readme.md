@@ -21,6 +21,20 @@ Your feedback is essential to help me decide what to work on. Feel free to make 
 
 If you like this fork or found it useful, please consider leaving us a star. It lets me know that folks are interested in the project and that I should spend more time on it.
 
+##  This Fork's Improvements
+
+This fork includes the following critical bug fixes and enhancements:
+
+- ** Fixed Menu System Bug**: Resolved a critical issue where creating/editing menu items would update wrong database records. The problem occurred because `menuItemObj` contained incorrect menu item IDs during `afterSave` callbacks, causing new menu items to overwrite existing ones (often the Home menu item).
+
+- ** Fixed Donations Plugin**: Added proper functionality and error handling for the donations plugin after installation. Includes query guards to prevent SQL errors, improved duplicate filtering, and MySQL strict mode compliance.
+
+- ** Docker Support**: Added a comprehensive Docker installation guide with step-by-step instructions for both development and production deployments, including NGINX configuration and SSL setup.
+
+**Technical Details**: The menu system fix queries the database directly using `itemname + menucategory_id + itemtype` to find the actual menu item ID instead of trusting object state. This solution is backward compatible and works on fresh installs without requiring repair scripts.
+
+See the [commit history](https://github.com/demorgon989/BlueThrust5/commits/master) for detailed technical information about these fixes.
+
 ## Progress So Far
 
 - [Technical Debt](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aclosed+label%3Atechnical-debt)
