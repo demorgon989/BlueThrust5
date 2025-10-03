@@ -42,7 +42,10 @@ $pluginsDir = scandir($prevFolder."plugins");
 $addCSS = "";
 $x = 0;
 foreach ($pluginsDir as $dir) {
-	if (is_dir($prevFolder."plugins/".$dir) && $dir != "." && $dir != ".." && !in_array($dir, $pluginObj->getPlugins("filepath")) && (file_exists($prevFolder."plugins/".$dir."/install.php") || file_exists($prevFolder."plugins/".$dir."/install_setup.php"))) {
+	// Skip deprecated plugins
+	$deprecatedPlugins = ['twitter'];
+	
+	if (is_dir($prevFolder."plugins/".$dir) && $dir != "." && $dir != ".." && !in_array($dir, $pluginObj->getPlugins("filepath")) && !in_array($dir, $deprecatedPlugins) && (file_exists($prevFolder."plugins/".$dir."/install.php") || file_exists($prevFolder."plugins/".$dir."/install_setup.php"))) {
 		if ($x == 0) {
 			$x = 1;
 			$addCSS = "";
@@ -72,6 +75,15 @@ foreach ($pluginsDir as $dir) {
 
 if ($dispPlugins != "") {
 	echo $dispPlugins;
+	
+	// Show note about deprecated plugins
+	echo "
+		<tr>
+			<td colspan='2' class='main' style='padding: 10px; font-size: 11px; color: #666;'>
+				<strong>Note:</strong> Some plugins (Twitter Connect) have been hidden because they are no longer functional due to external API changes.
+			</td>
+		</tr>
+	";
 } else {
 	echo "
 			<tr>
