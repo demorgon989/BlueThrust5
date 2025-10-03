@@ -24,7 +24,7 @@ class IPBan extends Basic {
 				$this->delete();
 			}
 		} else {
-			$arrCheckIP = explode(".", $ip);
+			$arrCheckIP = explode(".", $ip ?? '');
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."ipban WHERE ipaddress LIKE '%*%' AND (exptime > '".time()."' OR exptime = '0')");
 
