@@ -7,3 +7,4 @@
 /vendor/
 /src/downloads/
 /src/installer/_installrunning.txt
+*.code-workspace
