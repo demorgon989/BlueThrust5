@@ -147,7 +147,7 @@ class Form {
 					$displayForm .= "<input type='text' name='".$fakeComponentName."' value='".filterText($_POST[$fakeComponentName])."' ".$dispAttributes." id='".$componentInfo['options']['fake_id']."'><input type='hidden' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' id='".$componentInfo['options']['real_id']."'>";
 					break;
 				case "textarea":
-					$displayForm .= "<textarea name='".$componentName."' ".$dispAttributes.">".$componentInfo['value']."</textarea>";
+					$displayForm .= "<textarea name='".$componentName."' ".$dispAttributes.">".($componentInfo['value'] ?? '')."</textarea>";
 					break;
 				case "richtextbox":
 					$afterJS .= $this->richTextboxJS($componentInfo['attributes']['id'], $componentInfo['allowHTML'] ?? '');

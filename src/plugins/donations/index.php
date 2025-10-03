@@ -20,7 +20,7 @@ require_once($prevFolder."_setup.php");
 require_once("classes/campaign.php");
 require_once("breadcrumb_functions.php");
 
-switch ($_GET['p']) {
+switch ($_GET['p'] ?? '') {
 	case "history":
 		break;
 	case "thankyou":
