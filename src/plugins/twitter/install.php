@@ -48,8 +48,16 @@ $pluginObj = new btPlugin($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	$countErrors = 0;
+	// Clean output buffer to ensure clean JSON response
+	if (ob_get_level()) {
+		ob_clean();
+	}
+	
+	$countErrors = 1;
 	$dispError = [];
+
+	// DEPRECATED: Twitter API integration no longer functional
+	$dispError[] = "DEPRECATED: This plugin is no longer functional due to Twitter/X API changes. Twitter deprecated the API v1.1 used by this plugin. Installation is disabled to prevent issues.";
 
 	// Check if already installed
 
@@ -142,6 +150,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		$arrReturn['errors'] = $dispError;
 	}
 
-
+	// Send proper JSON headers
+	header('Content-Type: application/json');
 	echo json_encode($arrReturn);
 }
