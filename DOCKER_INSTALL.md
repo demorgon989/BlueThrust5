@@ -46,8 +46,26 @@ Add the following content:
 # Use official PHP 8.1 FPM image
 FROM php:8.1-fpm
 
-# Install PHP extensions required by BlueThrust
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+# Install system dependencies needed for PHP extensions
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    default-mysql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure and install GD extension with JPEG and FreeType support
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd
+
+# Install other PHP extensions required by BlueThrust
+RUN docker-php-ext-install mysqli pdo pdo_mysql mbstring exif pcntl bcmath
 
 # Set working directory inside the container
 WORKDIR /var/www/html
