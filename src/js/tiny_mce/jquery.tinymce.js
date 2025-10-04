@@ -27,12 +27,13 @@
                 
                 var isDark = (options.skin && options.skin.indexOf('dark') !== -1) || 
                            (contentCss.indexOf('dark') !== -1) ||
-                           (contentCss.indexOf('btcs4') !== -1) ||  // btcs4 is a dark theme
                            (contentCss.indexOf('ghost') !== -1) ||
                            (contentCss.indexOf('battlecity') !== -1) ||
                            (bodyClass.indexOf('dark') !== -1) || 
                            (bodyClass.indexOf('ghost') !== -1) ||
                            (bodyClass.indexOf('battlecity') !== -1);
+                
+                console.log('Dark theme detected:', isDark);
                 
                 console.log('Dark theme detected:', isDark);
                 
@@ -52,7 +53,7 @@
                     }
                 }
                 
-                // Determine skin name
+                // Determine skin name - keep oxide-dark UI but use pure dark content
                 var skinName = isDark ? 'oxide-dark' : 'oxide';
                 
                 // Convert old TinyMCE 3 options to TinyMCE 8 format
@@ -76,7 +77,9 @@
                     width: '100%',  // Force full width instead of inheriting textarea's width
                     height: 300,
                     min_height: 300,
-                    inline: false
+                    inline: false,
+                    // Custom CSS to override the blue-gray colors with neutral gray
+                    content_style: isDark ? 'body { background-color: #1e1e1e; color: #d4d4d4; }' : ''
                 };
                 
                 console.log('TinyMCE Init Options:', modernOptions);
@@ -174,6 +177,88 @@
                             container.style.setProperty('max-width', '100%', 'important');
                             container.style.setProperty('margin-left', '0', 'important');
                             container.style.setProperty('margin-right', '0', 'important');
+                            
+                            // Override blue-gray colors with neutral gray for dark theme
+                            if (isDark) {
+                                // Inject custom CSS to override the blue-gray toolbar/border colors
+                                var style = document.createElement('style');
+                                style.textContent = `
+                                    /* Main container - remove ALL blue borders */
+                                    .tox.tox-tinymce { 
+                                        border: 1px solid #1a1a1a !important;
+                                    }
+                                    .tox.tox-tinymce.tox-tinymce--toolbar-bottom,
+                                    .tox.tox-tinymce.tox-tinymce--toolbar-sticky-on { 
+                                        border-color: #1a1a1a !important;
+                                        background-color: #1a1a1a !important;
+                                    }
+                                    
+                                    /* Toolbar - almost black, remove all borders */
+                                    .tox .tox-toolbar, .tox .tox-toolbar__overflow, .tox .tox-toolbar__primary { 
+                                        background-color: #1a1a1a !important; 
+                                        border: none !important;
+                                        border-top: none !important;
+                                        border-bottom: none !important;
+                                    }
+                                    .tox .tox-toolbar-overlord { 
+                                        border: none !important;
+                                        border-top: none !important;
+                                        border-bottom: none !important;
+                                        background-color: #1a1a1a !important;
+                                    }
+                                    .tox .tox-toolbar__group { 
+                                        border: none !important;
+                                    }
+                                    /* Kill the blue separator lines between toolbar and editor */
+                                    .tox:not([dir=rtl]) .tox-toolbar__group:not(:last-of-type) {
+                                        border-right: none !important;
+                                    }
+                                    .tox-editor-header {
+                                        border-bottom: none !important;
+                                        box-shadow: none !important;
+                                    }
+                                    
+                                    /* Statusbar - almost black */
+                                    .tox .tox-statusbar { 
+                                        background-color: #1a1a1a !important; 
+                                        border-top: none !important;
+                                        border: none !important;
+                                        color: #999999 !important;
+                                    }
+                                    
+                                    /* Editor iframe border and area */
+                                    .tox .tox-edit-area { 
+                                        border: none !important;
+                                        border-top: none !important;
+                                        border-bottom: none !important;
+                                    }
+                                    .tox .tox-edit-area__iframe { 
+                                        border: none !important;
+                                        background-color: #1e1e1e !important;
+                                    }
+                                    
+                                    /* Toolbar buttons - white/gray color */
+                                    .tox .tox-tbtn { 
+                                        color: #cccccc !important;
+                                        background: transparent !important;
+                                    }
+                                    .tox .tox-tbtn:hover { 
+                                        background-color: #2d2d2d !important;
+                                        color: #ffffff !important;
+                                    }
+                                    .tox .tox-tbtn--enabled, .tox .tox-tbtn--enabled:hover {
+                                        background-color: #2d2d2d !important;
+                                        color: #ffffff !important;
+                                    }
+                                    .tox .tox-tbtn svg { 
+                                        fill: #cccccc !important;
+                                    }
+                                    .tox .tox-tbtn:hover svg, .tox .tox-tbtn--enabled svg {
+                                        fill: #ffffff !important;
+                                    }
+                                `;
+                                document.head.appendChild(style);
+                            }
                             
                             console.log('Forced container visibility and width to 100%');
                         }
