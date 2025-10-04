@@ -242,6 +242,7 @@ class Basic {
 				$combinedArray = array_combine($arrTableColumns, $arrColumnValues);
 
 				foreach ($combinedArray as $key => $value) {
+					$value = (string) $value; // Ensure value is a string for str_replace
 					$temp = str_replace("&gt;", ">", $value);
 					$value = str_replace("&lt;", "<", $temp);
 					$temp = str_replace('&quot;', '"', $value);

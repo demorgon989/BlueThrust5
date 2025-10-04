@@ -43,7 +43,7 @@ $numOfPages = ceil($totalDonations/$donationsPerPage);
 $pageSelector = new PageSelector();
 $pageSelector->setPages($numOfPages);
 
-$_GET['pageNum'] = $pageSelector->validatePageNumber($_GET['pageNum']);
+$_GET['pageNum'] = $pageSelector->validatePageNumber($_GET['pageNum'] ?? 1);
 
 $pageSelector->setCurrentPage($_GET['pageNum']);
 $pageSelector->setLink(MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=".$_GET['campaignID']."&p=log".$addToPageSelectorLink."&pageNum=");

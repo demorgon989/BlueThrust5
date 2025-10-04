@@ -180,13 +180,19 @@ if ($member->hasAccess($consoleObj)) {
 
 $consoleObj->select($cID);
 
-if (!is_array($arrSelectRecur)) {
+// Initialize recurring selection array
+$arrSelectRecur = [];
+if (isset($campaignInfo) && is_array($campaignInfo) && isset($campaignInfo['recurringunit']) && $campaignInfo['recurringunit'] != "") {
+	$arrSelectRecur[$campaignInfo['recurringunit']] = "selected";
+} elseif (!is_array($arrSelectRecur)) {
 	$arrSelectRecur['months'] = "selected";
 }
 
 $arrRecurUnits = ["days"=>"Days", "weeks"=>"Weeks", "months"=>"Months", "years"=>"Years"];
+$recurOptions = "";
 foreach ($arrRecurUnits as $key => $value) {
-	$recurOptions .= "<option value='".$key."'".$arrSelectRecur[$key].">".$value."</option>";
+	$selected = $arrSelectRecur[$key] ?? "";
+	$recurOptions .= "<option value='".$key."'".$selected.">".$value."</option>";
 }
 
 $disabledRecurring = ($checkRecurringBox == 1) ? "" : " disabled='disabled'";
@@ -233,7 +239,7 @@ $setupFormArgs = [
 		"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 		"description" => "Use the form below to create a new donation campaign.",
 		"embedJS" => $campaignJS,
-		"saveAdditional" => ["member_id" => $memberInfo['member_id'], "datestarted" => time(), "recurringamount" => $_POST['recurringamount'], "recurringunit" => $_POST['recurringunit']]
+		"saveAdditional" => ["member_id" => $memberInfo['member_id'], "datestarted" => time(), "recurringamount" => $_POST['recurringamount'] ?? 0, "recurringunit" => $_POST['recurringunit'] ?? ""]
 	];
 
 
@@ -245,20 +251,20 @@ function validateCreateCampaignForm() {
 	}
 
 	$validRecurringUnits = array_keys($arrRecurUnits);
-	if (!in_array($_POST['recurringunit'], $validRecurringUnits) && $_POST['recurring'] == 1) {
+	if (!in_array($_POST['recurringunit'] ?? "", $validRecurringUnits) && ($_POST['recurring'] ?? 0) == 1) {
 		$formObj->errors[] = "You selected an invalid recurring unit.";
 	}
 
-	if ($_POST['recurringamount'] <= 0 && $_POST['recurring'] == 1) {
+	if (($_POST['recurringamount'] ?? 0) <= 0 && ($_POST['recurring'] ?? 0) == 1) {
 		$formObj->errors[] = "The recurring amount must be greater than zero.";
 	}
 
-	if ($_POST['recurring'] != 1) {
+	if (($_POST['recurring'] ?? 0) != 1) {
 		$_POST['recurringunit'] = "";
 		$_POST['recurringamount'] = 0;
 		$_POST['recurring'] = 0;
 	} else {
-		switch ($_POST['recurringunit']) {
+		switch ($_POST['recurringunit'] ?? "") {
 			case "days":
 				$_POST['recurring'] = date($formObj->objSave->DAY);
 				break;
@@ -274,14 +280,14 @@ function validateCreateCampaignForm() {
 		}
 	}
 
-	if ($_POST['rununtil'] == "forever") {
+	if (($_POST['rununtil'] ?? "") == "forever") {
 		$_POST['enddate'] = 0;
 	}
 
 	if ($formObj->saveType == "update") {
 		global $campaignInfo;
 
-		if ($campaignInfo['recurringunit'] == $_POST['recurringunit'] && $campaignInfo['recurringamount'] == $_POST['recurringamount']) {
+		if (($campaignInfo['recurringunit'] ?? "") == ($_POST['recurringunit'] ?? "") && ($campaignInfo['recurringamount'] ?? 0) == ($_POST['recurringamount'] ?? 0)) {
 			$_POST['recurring'] = $campaignInfo['currentperiod'];
 		}
 	}

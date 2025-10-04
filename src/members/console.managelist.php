@@ -22,14 +22,14 @@ $titleWidth = 100-($actionsWidth);
 
 
 	// Setup default values if not given
-$actionsTitleName = ($setupManageListArgs['action_title'] == "") ? "Actions:" : $setupManageListArgs['action_title'];
-$itemTitleName = ($setupManageListArgs['item_title'] == "") ? "Item:" : $setupManageListArgs['item_title'];
+$actionsTitleName = (isset($setupManageListArgs['action_title']) && $setupManageListArgs['action_title'] == "") ? "Actions:" : $setupManageListArgs['action_title'] ?? "Actions:";
+$itemTitleName = (isset($setupManageListArgs['item_title']) && $setupManageListArgs['item_title'] == "") ? "Item:" : $setupManageListArgs['item_title'] ?? "Item:";
 
 $dispAddNewLink = (!isset($setupManageListArgs['add_new_link']['url']) || $setupManageListArgs['add_new_link']['url'] == "") ? "" : "&raquo; <a href='".$setupManageListArgs['add_new_link']['url']."'>".$setupManageListArgs['add_new_link']['name']."</a> &laquo;";
 
-$setupManageListArgs['list_div_name'] = ($setupManageListArgs['list_div_name'] == "") ? "manageListDiv" : $setupManageListArgs['list_div_name'];
+$setupManageListArgs['list_div_name'] = isset($setupManageListArgs['list_div_name']) && $setupManageListArgs['list_div_name'] == "" ? "manageListDiv" : $setupManageListArgs['list_div_name'] ?? "manageListDiv";
 
-$setupManageListArgs['loading_spiral'] = ($setupManageListArgs['loading_spiral'] == "") ? "manageListLoadingSpiral" : $setupManageListArgs['loading_spiral'];
+$setupManageListArgs['loading_spiral'] = isset($setupManageListArgs['loading_spiral']) && $setupManageListArgs['loading_spiral'] == "" ? "manageListLoadingSpiral" : $setupManageListArgs['loading_spiral'] ?? "manageListLoadingSpiral";
 
 
 

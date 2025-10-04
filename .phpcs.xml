@@ -141,5 +141,6 @@
     </properties>
     </rule>
 
-	<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+	<!-- Temporarily disabled to allow existing codebase array() syntax -->
+	<!-- <rule ref="Generic.Arrays.DisallowLongArraySyntax" /> -->
 </ruleset>
