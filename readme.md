@@ -31,6 +31,8 @@ This fork by [Demorgon](https://github.com/demorgon989) includes the following c
 
 - ** Docker Support**: Added a comprehensive Docker installation guide with step-by-step instructions for both development and production deployments, including NGINX configuration and SSL setup.
 
+- ** TinyMCE Upgrade**: Upgraded from TinyMCE 3.5.7 to 8.1.2, providing critical security updates, modern editor features, and improved compatibility. Includes custom BBCode buttons for forum posts and automatic dark/light theme detection for better user experience.
+
 **Technical Details**: The menu system fix queries the database directly using `itemname + menucategory_id + itemtype` to find the actual menu item ID instead of trusting object state. This solution is backward compatible and works on fresh installs without requiring repair scripts.
 
 See the [commit history](https://github.com/demorgon989/BlueThrust5/commits/master) for detailed technical information about these fixes.
