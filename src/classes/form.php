@@ -916,64 +916,27 @@ class Form {
 		global $MAIN_ROOT, $THEME, $hooksObj;
 
 		$addHTML = ($allowHTML) ? ",code" : "";
+		
+		// Auto-detect dark themes and generate appropriate CSS
+		$isDarkTheme = in_array($THEME, ['ghost', 'battlecity']) || $this->isDarkTheme();
+		$editorCSS = $isDarkTheme ? $this->generateDarkModeCSS() : MAIN_ROOT."themes/".$THEME."/btcs4.css";
+
+		// Set skin based on theme
+		$skin = $isDarkTheme ? 'oxide-dark' : 'oxide';
 
 		$GLOBALS['richtextEditor'] = "
-
-			
-				$(document).ready(function() {	
-					$('#".$componentID."').tinymce({
-					
-							script_url: '".MAIN_ROOT."js/tiny_mce/tiny_mce.js',
-							theme: 'advanced',
-							plugins: 'autolink,emotions,advimagescale',
-							cleanup_on_startup: true,
-							advimagescale_max_width: 550,
-							advimagescale_max_height: 150,
-							advimagescale_loading_callback: function(imgNode) {
-						        alert('resized to ' + imgNode.width + 'x' + imgNode.height);
-						    },
-							theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,emotions,|,quotebbcode,codebbcode".$addHTML.",',
-							theme_advanced_buttons2: 'forecolorpicker,fontselect,fontsizeselect',
-							theme_advanced_resizing: true,
-							content_css: '".MAIN_ROOT."themes/".THEME."/btcs4.css',
-							theme_advanced_statusbar_location: 'none',
-							style_formats: [
-								{title: 'Quote', inline : 'div', classes: 'forumQuote'}
-							
-							],
-							setup: function(ed) {
-								ed.addButton('quotebbcode', {
-									
-									title: 'Insert Quote',
-									image: '".MAIN_ROOT."js/tiny_mce/quote.png',
-									onclick: function() {
-										ed.focus();
-										innerText = ed.selection.getContent();
-										
-										ed.selection.setContent('[quote]'+innerText+'[/quote]');
-									}
-								});
-								
-								ed.addButton('codebbcode', {
-									
-									title: 'Insert Code',
-									image: '".MAIN_ROOT."js/tiny_mce/code.png',
-									onclick: function() {
-										ed.focus();
-										innerText = ed.selection.getContent();
-										
-										ed.selection.setContent('[code]'+innerText+'[/code]');
-									}
-								
-								});
-							}
-							
-							
-						
-						});
-					});
-
-			";
+			$(document).ready(function() {
+				$('#".$componentID."').tinymce({
+					script_url: '".addslashes(MAIN_ROOT)."js/tiny_mce/tinymce.min.js',
+					skin: '".addslashes($skin)."',
+					content_css: '".addslashes($editorCSS)."',
+					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,alignleft,aligncenter,alignright,|,bullist,numlist,|,link,unlink,image,emoticons,|,quotebbcode,codebbcode".$addHTML.",',
+					theme_advanced_buttons2: 'forecolor,fontselect,fontsizeselect',
+					theme_advanced_resizing: true
+				});
+			});
+		";
+		
 		$GLOBALS['rtCompID'] = $componentID;
 		$hooksObj->run("form_richtexteditor");
 
@@ -1017,5 +980,146 @@ class Form {
 
 	public function getColorpickerJSFile() {
 		return $this->colorpickerJSFile;
+	}
+
+	/**
+	 * Detect if current theme is dark-themed by checking CSS color values
+	 */
+	private function isDarkTheme() {
+		global $THEME, $MAIN_ROOT;
+		
+		// Try to detect dark theme by looking at CSS variables if available
+		$cssFile = MAIN_ROOT."themes/".$THEME."/css.php";
+		if (file_exists($cssFile)) {
+			include($cssFile);
+			if (isset($arrCSSInfo['font-color'])) {
+				// Light colors (white, silver, etc.) suggest dark theme background
+				$lightColors = ['white', '#fff', '#ffffff', 'silver', '#c0c0c0', '#ddd', '#dddddd'];
+				return in_array(strtolower($arrCSSInfo['font-color']), $lightColors);
+			}
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Generate dark mode CSS for TinyMCE editor as data URI to avoid external files
+	 */
+	private function generateDarkModeCSS() {
+		global $THEME, $MAIN_ROOT;
+		
+		// Get theme colors if available
+		$cssFile = MAIN_ROOT."themes/".$THEME."/css.php";
+		$fontColor = 'white';
+		$linkColor = 'silver';
+		$linkHoverColor = '#647d99';
+		
+		if (file_exists($cssFile)) {
+			include($cssFile);
+			if (isset($arrCSSInfo)) {
+				$fontColor = $arrCSSInfo['font-color'] ?? 'white';
+				$linkColor = $arrCSSInfo['link-color'] ?? 'silver';  
+				$linkHoverColor = $arrCSSInfo['link-hover-color'] ?? '#647d99';
+			}
+		}
+
+		$darkCSS = "
+body {
+	background-color: #2d2d2d;
+	color: {$fontColor};
+	font-family: verdana, sans-serif;
+	font-size: 11px;
+	margin: 8px;
+}
+
+p, div, span, td, th { color: {$fontColor}; }
+a { color: {$linkColor}; }
+a:hover { color: {$linkHoverColor}; }
+
+blockquote {
+	background-color: #1a1a1a;
+	border-left: 3px solid {$linkHoverColor};
+	padding: 10px;
+	margin: 10px 0;
+	color: {$fontColor};
+}
+
+code, pre {
+	background-color: #1a1a1a;
+	color: {$fontColor};
+	padding: 2px 4px;
+	border-radius: 3px;
+	border: 1px solid #555;
+}
+
+ul, ol { color: {$fontColor}; }
+li { color: {$fontColor}; }
+
+table { border-color: #555; }
+td, th { border-color: #555; color: {$fontColor}; }
+
+hr { border-color: #555; }
+";
+
+		// Add TinyMCE toolbar dark theme CSS (injected into page, not content area)
+		$toolbarCSS = "
+<style type='text/css'>
+/* TinyMCE Dark Toolbar Theme */
+.mce-tinymce .mce-toolbar-grp { background: #3d3d3d !important; border-color: #555 !important; }
+.mce-tinymce .mce-toolbar { background: #3d3d3d !important; }
+.mce-tinymce .mce-btn { background: #3d3d3d !important; border-color: #555 !important; color: {$fontColor} !important; }
+.mce-tinymce .mce-btn:hover { background: #4d4d4d !important; }
+.mce-tinymce .mce-btn.mce-active { background: #555 !important; }
+.mce-tinymce .mce-listbox .mce-txt { background: #3d3d3d !important; color: {$fontColor} !important; border-color: #555 !important; }
+.mce-tinymce .mce-listbox:hover .mce-txt { background: #4d4d4d !important; }
+.mce-tinymce .mce-menubar { background: #3d3d3d !important; border-color: #555 !important; }
+.mce-tinymce .mce-menu { background: #3d3d3d !important; border-color: #555 !important; }
+.mce-tinymce .mce-menu-item { color: {$fontColor} !important; }
+.mce-tinymce .mce-menu-item:hover { background: #4d4d4d !important; }
+.mce-tinymce { border-color: #555 !important; }
+.mce-tinymce .mce-statusbar { background: #3d3d3d !important; border-color: #555 !important; color: {$fontColor} !important; }
+</style>
+";
+
+		// Add toolbar CSS to page head
+		global $btThemeObj;
+		if (isset($btThemeObj)) {
+			$btThemeObj->addHeadItem("tinymce-dark-toolbar", str_replace(['{$fontColor}', '{$linkColor}', '{$linkHoverColor}'], [$fontColor, $linkColor, $linkHoverColor], $toolbarCSS));
+		}
+
+		// Add !important to ensure styles override TinyMCE defaults
+		$darkCSS = str_replace(['{$fontColor}', '{$linkColor}', '{$linkHoverColor}'], 
+								[$fontColor.' !important', $linkColor.' !important', $linkHoverColor.' !important'], 
+								$darkCSS);
+		$darkCSS = str_replace(['background-color: #2d2d2d', 'background-color: #1a1a1a'], 
+								['background-color: #2d2d2d !important', 'background-color: #1a1a1a !important'], 
+								$darkCSS);
+		
+		// Create temporary CSS file in js directory (writable, not theme-specific)  
+		$darkCSSFileName = "tinymce-dark-".md5($THEME).".css";
+		
+		// Determine correct path by working backwards from this file's location
+		// This file is in classes/, so parent directory contains js/
+		$classesDir = dirname(__FILE__);
+		$baseDir = dirname($classesDir);
+		$darkCSSPath = $baseDir."/js/".$darkCSSFileName;
+		$darkCSSURL = MAIN_ROOT."js/".$darkCSSFileName;
+		
+		// Ensure js directory exists and is writable
+		$jsDir = $baseDir."/js/";
+		if (!is_dir($jsDir)) {
+			mkdir($jsDir, 0755, true);
+		}
+		
+		// Check if we can write to js directory, fallback to temp directory if not
+		if (!is_writable($jsDir)) {
+			$darkCSSPath = sys_get_temp_dir()."/bt-".$darkCSSFileName;
+			// For temp files, we'll use data URI instead since they won't be web-accessible
+			return 'data:text/css;charset=utf-8,' . urlencode($darkCSS);
+		}
+		
+		file_put_contents($darkCSSPath, $darkCSS);
+		
+		return $darkCSSURL;
 	}
 }
