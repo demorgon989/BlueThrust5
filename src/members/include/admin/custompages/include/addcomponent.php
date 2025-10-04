@@ -38,29 +38,29 @@ $componentIndex = $_SESSION['btFormComponentCount'];
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
-	$countErrors == 0;
+	$countErrors = 0;
 	$dispError = "";
 
-	if ($_POST['addComponent']) {
+	if (isset($_POST['addComponent']) && $_POST['addComponent']) {
 		$arrTypes = ["input", "largeinput", "select", "multiselect", "separator"];
 
 		// Check Name
 
-		if (trim($_POST['componentName']) == "") {
+		if (trim($_POST['componentName'] ?? '') == "") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Component name may not be blank.<br>";
 		}
 
 		// Check Component Type
 
-		if (!in_array($_POST['componentType'], $arrTypes)) {
+		if (!isset($_POST['componentType']) || !in_array($_POST['componentType'], $arrTypes)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid component type.<br>";
 		}
 
 
 		$intRequired = 1;
-		if ($_POST['componentRequired'] != 1) {
+		if (($_POST['componentRequired'] ?? 0) != 1) {
 			$intRequired = 0;
 		}
 
@@ -69,8 +69,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 			$_SESSION['btFormComponent'][$componentIndex]['name'] = $_POST['componentName'];
 			$_SESSION['btFormComponent'][$componentIndex]['type'] = $_POST['componentType'];
-			$_SESSION['btFormComponent'][$componentIndex]['required'] = $_POST['componentRequired'];
-			$_SESSION['btFormComponent'][$componentIndex]['tooltip'] = $_POST['componentToolTip'];
+			$_SESSION['btFormComponent'][$componentIndex]['required'] = $_POST['componentRequired'] ?? 0;
+			$_SESSION['btFormComponent'][$componentIndex]['tooltip'] = $_POST['componentToolTip'] ?? '';
 
 			$_SESSION['btFormComponentCount'] = $componentIndex+1;
 
@@ -115,8 +115,14 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 
 
-	if (!$_POST['addComponent']) {
-		$arrSelectedType = [];
+	if (!isset($_POST['addComponent']) || !$_POST['addComponent']) {
+		$arrSelectedType = [
+			'input' => '',
+			'largeinput' => '',
+			'select' => '',
+			'multiselect' => '',
+			'separator' => ''
+		];
 		$checkRequired = "";
 		if ($dispError != "") {
 			echo "
@@ -126,7 +132,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 			</div>
 			";
 
-			switch ($_POST['componentType']) {
+			switch ($_POST['componentType'] ?? '') {
 				case "largeinput":
 					$arrSelectedType['largeinput'] = " selected";
 					break;
@@ -141,7 +147,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 					break;
 			}
 
-			if ($_POST['componentRequired'] == 1) {
+			if (($_POST['componentRequired'] ?? 0) == 1) {
 				$checkRequired = " checked";
 			} else {
 				$_POST['componentRequired'] = 0;
@@ -157,7 +163,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 				<table class='formTable' style='width: 90%'>
 					<tr>
 						<td class='main' style='width: 25%'><b>Name:</b></td>
-						<td class='main' style='width: 75%'><input type='text' class='textBox' value='".$_POST['componentName']."' id='componentName'></td>
+						<td class='main' style='width: 75%'><input type='text' class='textBox' value='".($_POST['componentName'] ?? '')."' id='componentName'></td>
 					</tr>
 					<tr>
 						<td class='main' style='width: 25%'><b>Type:</b></td>
@@ -177,12 +183,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 					<tr>
 						<td class='main' style='width: 25%' valign='top'><b>Tooltip:</b></td>
 						<td class='main' style='width: 75%'>
-							<textarea id='componentToolTip' class='textBox' style='width: 200px; height: 40px'>".$_POST['componentToolTip']."</textarea>
+							<textarea id='componentToolTip' class='textBox' style='width: 200px; height: 40px'>".($_POST['componentToolTip'] ?? '')."</textarea>
 						</td>
 					</tr>
 					<tr>
 						<td class='main' style='width: 25%'><b>Required:</b></td>
-						<td class='main' style='width: 75%'><input type='checkbox' id='componentRequiredFake'".$checkRequired."><input type='hidden' id='componentRequired' value='".$_POST['componentRequired']."'></td>
+						<td class='main' style='width: 75%'><input type='checkbox' id='componentRequiredFake'".$checkRequired."><input type='hidden' id='componentRequired' value='".($_POST['componentRequired'] ?? 0)."'></td>
 					</tr>
 			
 				</table>

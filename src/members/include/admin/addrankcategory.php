@@ -261,7 +261,7 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 				<tr>
 					<td class='formLabel' valign='top'>Description:<br><span style='font-weight: normal'><i>(optional)</i></span></td>
 					<td class='main'>
-						<textarea rows='5' cols='40' class='textBox' name='catdesc'>".((isset($_POST['catdesc'])) ? $_POST['catdesc'] : "")."</textarea>
+						<textarea rows='5' cols='40' class='textBox' name='catdesc'>".($_POST['catdesc'] ?? '')."</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -280,7 +280,7 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 				</tr>
 				<tr>
 				<td class='formLabel'>Color:</td>
-					<td class='main'><input type='text' id='rankcolor' name='rankcolor' value='".$_POST['rankcolor']."' class='textBox' style='width: 70px'></td>
+					<td class='main'><input type='text' id='rankcolor' name='rankcolor' value='".($_POST['rankcolor'] ?? '')."' class='textBox' style='width: 70px'></td>
 				</tr>
 				<tr>
 					<td class='formLabel' valign='top'>Ranks:</td>

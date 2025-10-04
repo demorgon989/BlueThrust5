@@ -50,6 +50,7 @@ while ($row = $result->fetch_assoc()) {
 	$arrConsoleCatIDs[] = $row['consolecategory_id'];
 }
 
+$dispConsoles = "";
 foreach ($arrConsoleCatIDs as $consoleCatID) {
 	$consoleCatObj->select($consoleCatID);
 	$consoleCatInfo = $consoleCatObj->get_info_filtered();

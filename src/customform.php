@@ -169,7 +169,7 @@ if ( ! empty($_POST['submit']) ) {
 			echo "
 			
 				<div style='display: none' id='successBox'>
-					".$customPageInfo['submitmessage']."
+					".html_entity_decode($customPageInfo['submitmessage'], ENT_QUOTES, 'UTF-8')."
 				</div>
 				<script type='text/javascript'>
 					popupDialog('".$customPageInfo['name']."', '".$customPageInfo['submitlink']."', 'successBox');
@@ -178,7 +178,7 @@ if ( ! empty($_POST['submit']) ) {
 		} else {
 			echo "
 				<div style='display: none' id='successBox'>
-					".$customPageInfo['submitmessage']."
+					".html_entity_decode($customPageInfo['submitmessage'], ENT_QUOTES, 'UTF-8')."
 				
 					<form action='".$customPageInfo['submitlink']."' method='post'>
 						";
@@ -252,7 +252,7 @@ if ( empty($_POST['submit']) ) {
 	}
 
 
-	echo $customPageInfo['pageinfo'];
+	echo html_entity_decode($customPageInfo['pageinfo'], ENT_QUOTES, 'UTF-8');
 
 	echo "
 	
@@ -267,7 +267,7 @@ if ( empty($_POST['submit']) ) {
 		$componentFormName = "customform_".$componentID;
 		switch ($componentInfo['componenttype']) {
 			case "largeinput":
-				$dispInput = "<textarea name='customform_".$componentID."' class='textBox' rows='4' style='width: 250px'>".$_POST[$componentFormName]."</textarea>";
+				$dispInput = "<textarea name='customform_".$componentID."' class='textBox' rows='4' style='width: 250px'>".($_POST[$componentFormName] ?? '')."</textarea>";
 				break;
 			case "select":
 				$selectoptions = "";
@@ -290,7 +290,7 @@ if ( empty($_POST['submit']) ) {
 				}
 				break;
 			case "input":
-				$dispInput = "<input type='text' value='".$_POST[$componentFormName]."' name='".$componentFormName."' class='textBox' style='width: 150px'>";
+				$dispInput = "<input type='text' value='".($_POST[$componentFormName] ?? '')."' name='".$componentFormName."' class='textBox' style='width: 150px'>";
 		}
 
 		$dispRequired = "";

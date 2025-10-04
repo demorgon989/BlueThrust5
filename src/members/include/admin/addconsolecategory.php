@@ -26,6 +26,7 @@ require_once($prevFolder."classes/consolecategory.php");
 $cID = $_GET['cID'];
 
 $consoleCatObj = new ConsoleCategory($mysqli);
+$dispError = "";
 
 if ( ! empty($_POST['submit']) ) {
 	// Check Category Name
@@ -90,6 +91,7 @@ if ( ! empty($_POST['submit']) ) {
 
 if ( empty($_POST['submit']) ) {
 	$countCategories = 0;
+	$catOrderOptions = "";
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption = '0' ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
@@ -124,7 +126,7 @@ if ( empty($_POST['submit']) ) {
 				<table class='formTable'>
 					<tr>
 						<td class='formLabel'>Category Name:</td>
-						<td class='main'><input type='text' name='catname' class='textBox' value='".$_POST['catname']."' style='width: 250px'></td>
+						<td class='main'><input type='text' name='catname' class='textBox' value='".($_POST['catname'] ?? '')."' style='width: 250px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Category Order:</td>

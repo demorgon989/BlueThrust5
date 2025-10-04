@@ -43,6 +43,7 @@ if ($cID == "") {
 
 
 $counter = 0;
+$dispPages = "";
 $result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."customform ORDER BY name");
 while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {

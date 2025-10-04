@@ -142,7 +142,7 @@ if ( empty($_POST['submit']) ) {
 				<table class='formTable'>
 					<tr>
 						<td class='formLabel'>Category Name:</td>
-						<td class='main'><input type='text' name='catname' class='textBox' value='".$_POST['catname']."' style='width: 250px'></td>
+						<td class='main'><input type='text' name='catname' class='textBox' value='".($_POST['catname'] ?? '')."' style='width: 250px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Category Order:</td>
@@ -153,7 +153,7 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel'>Extensions: <a href='javascript:void(0)' onmouseover=\"showToolTip('Enter the acceptable extensions for downloads in this category.  Separate multiple extensions with a comma (,).')\" onmouseout='hideToolTip()'>(?)</a></td>
-						<td class='main'><input type='text' name='catexts' class='textBox' value='".$_POST['catexts']."' style='width: 250px'></td>
+						<td class='main'><input type='text' name='catexts' class='textBox' value='".($_POST['catexts'] ?? '')."' style='width: 250px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Access Type:</td>

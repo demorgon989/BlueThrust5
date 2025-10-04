@@ -44,6 +44,7 @@ if ($cID == "") {
 $intHighestOrder = $gameObj->getHighestOrderNum();
 $counter = 0;
 $x = 1;
+$dispGames = "";
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."gamesplayed ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {

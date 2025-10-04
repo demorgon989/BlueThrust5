@@ -169,13 +169,13 @@ if ( ! empty($_POST['submit']) ) {
 				$arrColumns = ["firststat_id", "secondstat_id", "calcop"];
 				foreach ($arrSavedStats as $key => $statInfo) {
 					if ($statInfo['stattype'] == "calculate") {
-						$intFirstStatOrder = $_SESSION['btStatCache'][$key]['firstStat'];
-						$intFirstStatID = $arrSavedStats[$intFirstStatOrder]['gamestats_id'];
+						$intFirstStatOrder = $_SESSION['btStatCache'][$key]['firstStat'] ?? '';
+						$intFirstStatID = $arrSavedStats[$intFirstStatOrder]['gamestats_id'] ?? '';
 
-						$intSecondStatOrder = $_SESSION['btStatCache'][$key]['secondStat'];
-						$intSecondStatID = $arrSavedStats[$intSecondStatOrder]['gamestats_id'];
+						$intSecondStatOrder = $_SESSION['btStatCache'][$key]['secondStat'] ?? '';
+						$intSecondStatID = $arrSavedStats[$intSecondStatOrder]['gamestats_id'] ?? '';
 
-						$calcOp = $_SESSION['btStatCache'][$key]['calcOperation'];
+						$calcOp = $_SESSION['btStatCache'][$key]['calcOperation'] ?? '';
 
 						$arrValues = [$intFirstStatID, $intSecondStatID, $calcOp];
 

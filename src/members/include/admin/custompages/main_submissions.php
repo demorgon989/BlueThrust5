@@ -36,6 +36,7 @@ $intAddCustomPageID = $consoleObj->findConsoleIDByName("Add Custom Form Page");
 $intManageCustomFormID = $consoleObj->findConsoleIDByName("Manage Custom Form Pages");
 
 $counter = 0;
+$dispPages = "";
 $result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."customform ORDER BY name");
 while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {

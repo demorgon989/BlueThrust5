@@ -30,7 +30,7 @@ $cID = $_GET['cID'];
 
 
 
-if ($_GET['cpID'] == "") {
+if (!isset($_GET['cpID']) || $_GET['cpID'] == "") {
 	echo "
 	<div id='loadingSpiral' class='loadingSpiral'>
 		<p align='center'>

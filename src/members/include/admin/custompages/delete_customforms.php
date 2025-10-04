@@ -33,9 +33,10 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$customPageInfo = $customPageObj->get_info_filtered();
 
-		if ($_POST['confirm'] == "1") {
+		if (isset($_POST['confirm']) && $_POST['confirm'] == "1") {
 			$customPageObj->delete();
-			require_once("main_customforms.php");
+			echo "<script type='text/javascript'>window.location = 'console.php?cID=".$_POST['cID']."';</script>";
+			exit;
 		} else {
 			echo "<p align='center'>Are you sure you want to delete the custom form <b>".$customPageInfo['name']."</b>?<br><br>All submissions related to this form will also be deleted.";
 		}

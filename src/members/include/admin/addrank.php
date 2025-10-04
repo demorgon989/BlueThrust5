@@ -316,7 +316,7 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 			</tr>
 			<tr>
 				<td class='formLabel' valign='top'>Description:</td>
-				<td class='main'><textarea class='textBox' name='rankdesc' rows='5' cols='40'>".((isset($_POST['rankdesc'])) ? $_POST['rankdesc'] : "")."</textarea></td>
+				<td class='main'><textarea class='textBox' name='rankdesc' rows='5' cols='40'>".($_POST['rankdesc'] ?? '')."</textarea></td>
 			</tr>
 			<tr>
 				<td class='formLabel'>Rank Category:</td>
@@ -381,6 +381,9 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 	$rankOptions = "";
 	while ($arrConsoleOptions = $consoleOptions->fetch_assoc()) {
 		$tempCat = $arrConsoleOptions['consolecategory_id'];
+		if (!isset($arrFormatOptions[$tempCat])) {
+			$arrFormatOptions[$tempCat] = [];
+		}
 		$arrFormatOptions[$tempCat][] = $arrConsoleOptions['console_id'];
 	}
 

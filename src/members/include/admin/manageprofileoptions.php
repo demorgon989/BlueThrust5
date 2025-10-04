@@ -31,7 +31,7 @@ require_once($prevFolder."classes/profileoption.php");
 $profileCatObj = new ProfileCategory($mysqli);
 $profileOptionObj = new ProfileOption($mysqli);
 
-if ($_GET['oID'] == "") {
+if (!isset($_GET['oID']) || $_GET['oID'] == "") {
 	echo "
 	<div id='loadingSpiral' class='loadingSpiral'>
 		<p align='center'>

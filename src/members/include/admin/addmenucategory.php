@@ -132,8 +132,9 @@ if ( empty($_POST['submit']) ) {
 		$selectSection[$_GET['sectionID']] = " selected";
 	}
 
+	$sectionoptions = "";
 	for ($i=0; $i<$menuXML->info->section->count(); $i++) {
-		$sectionoptions .= "<option value='".$i."'".$selectSection[$i].">".$menuXML->info->section[$i]."</option>";
+		$sectionoptions .= "<option value='".$i."'".($selectSection[$i] ?? "").">".$menuXML->info->section[$i]."</option>";
 	}
 
 	echo "
@@ -157,7 +158,7 @@ if ( empty($_POST['submit']) ) {
 				<table class='formTable'>
 					<tr>
 						<td class='formLabel'>Category Name:</td>
-						<td class='main'><input type='text' name='categoryname' value='".$_POST['categoryname']."' class='textBox' style='width: 200px'></td>
+						<td class='main'><input type='text' name='categoryname' value='".($_POST['categoryname'] ?? '')."' class='textBox' style='width: 200px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Section: <a href='javascript:void(0)' onmouseover=\"showToolTip('Menu sections are determined by the theme you are currently using.')\" onmouseout='hideToolTip()'>(?)</a></td>
@@ -185,13 +186,13 @@ if ( empty($_POST['submit']) ) {
 								File:<br><input type='file' name='headerimagefile' class='textBox' style='width: 250px; border: 0px'><br>
 								<span style='font-size: 10px'>File Types: .jpg, .gif, .png, .bmp | <a href='javascript:void(0)' onmouseover=\"showToolTip('The file size upload limit is controlled by your PHP settings in the php.ini file.')\" onmouseout='hideToolTip()'>File Size: ".ini_get("upload_max_filesize")."B or less</a></span>
 								<p><b><i>OR</i></b></p>
-								URL:<br><input type='text' name='headerimageurl' value='".$_POST['headerimageurl']."' class='textBox' style='width: 250px'>
+								URL:<br><input type='text' name='headerimageurl' value='".($_POST['headerimageurl'] ?? '')."' class='textBox' style='width: 250px'>
 							</div>
 							<div id='codeEditorDiv' style='display: none'>
 								<div id='customMenuHeaderEditor' class='codeEditor' style='height: 150px; width: 90%'></div>
 							</div>
 							<div id='wysiwygEditorDiv' style='display: none'>
-								<textarea id='tinymceTextArea' name='wysiwygHTML' style='width: 80%' rows='15'>".$_POST['wysiwygHTML']."</textarea>
+								<textarea id='tinymceTextArea' name='wysiwygHTML' style='width: 80%' rows='15'>".($_POST['wysiwygHTML'] ?? '')."</textarea>
 							</div>
 						</td>
 					</tr>

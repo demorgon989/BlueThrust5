@@ -26,6 +26,7 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 require_once($prevFolder."classes/profilecategory.php");
 $profileCatObj = new ProfileCategory($mysqli);
 $cID = $_GET['cID'];
+$dispError = "";
 
 
 
@@ -86,6 +87,7 @@ if ( ! empty($_POST['submit']) ) {
 
 if ( empty($_POST['submit']) ) {
 	$countCategories = 0;
+	$catOrderOptions = "";
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
@@ -122,7 +124,7 @@ if ( empty($_POST['submit']) ) {
 			<table class='formTable'>
 				<tr>
 					<td class='formLabel'>Category Name:</td>
-					<td class='main'><input type='text' name='catname' value='".$_POST['catname']."' class='textBox' style='width: 250px'></td>
+					<td class='main'><input type='text' name='catname' value='".($_POST['catname'] ?? '')."' class='textBox' style='width: 250px'></td>
 				</tr>
 				<tr>
 					<td class='formLabel' valign='top'>Category Order:</td>

@@ -32,6 +32,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 
 $failbanObj = new Basic($mysqli, "failban", "failban_id");
 $intMaxAttempts = 3;
+$dispError = "";
 
 if ( ! empty($_POST['submit']) ) {
 	$countErrors = 0;
@@ -207,6 +208,7 @@ if ( ! empty($_POST['submit']) ) {
 
 if ( empty($_POST['submit']) ) {
 	$_SESSION['btAccessRules'] = [];
+	$consoleCatOptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption != '1' ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
 		$consoleCatOptions .= "<option value='".$row['consolecategory_id']."'>".filterText($row['name'])."</option>";
@@ -218,6 +220,7 @@ if ( empty($_POST['submit']) ) {
 		$arrRankCats[] = $row['rankcategory_id'];
 	}
 
+	$rankOptions = "";
 	foreach ($arrRankCats as $rankCat) {
 		$rankCatObj->select($rankCat);
 		$arrRanks = $rankCatObj->getAssociateIDs();
@@ -279,7 +282,7 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel'>Page Title:</td>
-						<td class='main'><input type='text' name='pagetitle' class='textBox' value='".$_POST['pagetitle']."' style='width: 250px'></td>
+						<td class='main'><input type='text' name='pagetitle' class='textBox' value='".($_POST['pagetitle'] ?? '')."' style='width: 250px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>File:</td>
