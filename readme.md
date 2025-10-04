@@ -23,7 +23,7 @@ If you like this fork or found it useful, please consider leaving us a star. It 
 
 ##  This Fork's Improvements
 
-This fork by [Demorgon](https://github.com/demorgon989) includes the following critical bug fixes and enhancements:
+This fork includes the following critical bug fixes and enhancements:
 
 - ** Fixed Menu System Bug**: Resolved a critical issue where creating/editing menu items would update wrong database records. The problem occurred because `menuItemObj` contained incorrect menu item IDs during `afterSave` callbacks, causing new menu items to overwrite existing ones (often the Home menu item).
 
