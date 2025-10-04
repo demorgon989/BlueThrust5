@@ -205,7 +205,7 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 
 	$ytInfo = $ytObj->get_info_filtered();
 
-	$checkVideos = [];
+	$checkVideos = [0 => "", 1 => ""];
 	if ($ytInfo['showvideos'] == 0) {
 		$checkVideos[0] = " selected";
 	} elseif ($ytInfo['showvideos'] == 1) {
