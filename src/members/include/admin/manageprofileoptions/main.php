@@ -51,6 +51,7 @@ while ($row = $result->fetch_assoc()) {
 	$arrProfileCatIDs[] = $row['profilecategory_id'];
 }
 
+$dispOptions = "";
 foreach ($arrProfileCatIDs as $profileCatID) {
 	$profileCatObj->select($profileCatID);
 	$profileCatInfo = $profileCatObj->get_info_filtered();

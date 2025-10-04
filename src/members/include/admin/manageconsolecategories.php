@@ -31,7 +31,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 
 
 
-if ($_GET['catID'] == "") {
+if (!isset($_GET['catID']) || $_GET['catID'] == "") {
 	echo "
 	
 		<div id='loadingSpiral' class='loadingSpiral'>

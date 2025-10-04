@@ -51,6 +51,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 $intHighestOrder = $consoleCatObj->getHighestOrderNum();
 $counter = 0;
 $x = 1;
+$dispCats = "";
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {

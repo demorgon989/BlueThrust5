@@ -107,7 +107,7 @@ if ( empty($_POST['submit']) ) {
 		<table class='formTable'>
 			<tr>
 				<td class='formLabel'>Page Name:</td>
-				<td class='main'><input type='text' name='pagename' class='textBox' value='".$_POST['pagename']."' style='width: 250px'></td>
+				<td class='main'><input type='text' name='pagename' class='textBox' value='".($_POST['pagename'] ?? '')."' style='width: 250px'></td>
 			</tr>
 			<tr>
 				<td colspan='2' class='main'><br>
@@ -120,7 +120,7 @@ if ( empty($_POST['submit']) ) {
 			</tr>
 			<tr>
 				<td colspan='2' style='padding-left: 10px' align='center'>
-					<textarea id='tinymceTextArea' name='wysiwygHTML' rows='15' style='width: 80%'>".$_POST['wysiwygHTML']."</textarea>
+					<textarea id='tinymceTextArea' name='wysiwygHTML' rows='15' style='width: 80%'>".($_POST['wysiwygHTML'] ?? '')."</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -132,13 +132,13 @@ if ( empty($_POST['submit']) ) {
 			<tr>
 				<td class='formLabel' valign='top'>Submit Message: <a href='javascript:void(0)' onmouseover=\"showToolTip('Enter a message to display when the form is submitted.')\" onmouseout='hideToolTip()'><b>(?)</b></a></td>
 				<td class='main' valign='top' style='padding-bottom: 20px'>
-					<textarea id='tinymceSubmitMessage' name='submitMessageHTML' rows='3' style='width: 50%; margin-bottom: 20px'>".$_POST['submitMessageHTML']."</textarea>
+					<textarea id='tinymceSubmitMessage' name='submitMessageHTML' rows='3' style='width: 50%; margin-bottom: 20px'>".($_POST['submitMessageHTML'] ?? '')."</textarea>
 				</td>
 			</tr>
 			<tr>
 				<td class='formLabel' valign='top'>Submit Link: <a href='javascript:void(0)' onmouseover=\"showToolTip('Enter a URL to direct the user to once the form is submitted.')\" onmouseout='hideToolTip()'><b>(?)</b></a></td>
 				<td class='main' valign='top'>
-					<input type='text' name='submitlink' class='textBox' value='".$_POST['submitlink']."' style='width: 250px'>
+					<input type='text' name='submitlink' class='textBox' value='".($_POST['submitlink'] ?? '')."' style='width: 250px'>
 				</td>
 			</tr>
 			<tr>
@@ -218,19 +218,22 @@ if ( empty($_POST['submit']) ) {
 			
 					script_url: '".$MAIN_ROOT."js/tiny_mce/tiny_mce.js',
 					theme: 'advanced',
-					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,code,|,forecolorpicker,fontselect,fontsizeselect',
+					plugins: 'code',
+					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,codebbcode,|,forecolorpicker,fontselect,fontsizeselect',
 					theme_advanced_resizing: true
 				
 				});
 				
-				$('#tinymceSubmitMessage').tinymce({
-			
-					script_url: '".$MAIN_ROOT."js/tiny_mce/tiny_mce.js',
-					theme: 'advanced',
-					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,code,|,forecolorpicker,fontselect,fontsizeselect',
-					theme_advanced_resizing: true
+				setTimeout(function() {
+					$('#tinymceSubmitMessage').tinymce({
 				
-				});
+						script_url: '".$MAIN_ROOT."js/tiny_mce/tiny_mce.js',
+						theme: 'advanced',
+						theme_advanced_buttons1: 'bold,italic,underline',
+						theme_advanced_resizing: true
+					
+					});
+				}, 100);
 			
 				
 				

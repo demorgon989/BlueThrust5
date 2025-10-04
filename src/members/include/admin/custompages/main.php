@@ -46,6 +46,7 @@ $intAddCustomPageID = $consoleObj->findConsoleIDByName("Add Custom Page");
 
 
 $counter = 0;
+$dispPages = "";
 $result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."custompages ORDER BY pagename");
 while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {

@@ -30,6 +30,7 @@ require_once($prevFolder."classes/profileoption.php");
 
 $profileCatObj = new ProfileCategory($mysqli);
 $profileOptionObj = new ProfileOption($mysqli);
+$dispError = "";
 
 if ( ! empty($_POST['submit']) ) {
 	// Check Option Name
@@ -154,7 +155,7 @@ if ( empty($_POST['submit']) ) {
 				</tr>
 				<tr>
 					<td class='formLabel'>Option Name:</td>
-					<td class='main'><input type='text' name='optionname' value='".$_POST['optionname']."' class='textBox' style='width: 250px'></td>
+					<td class='main'><input type='text' name='optionname' value='".($_POST['optionname'] ?? '')."' class='textBox' style='width: 250px'></td>
 				</tr>
 				<tr>
 					<td class='formLabel'>Profile Category:</td>

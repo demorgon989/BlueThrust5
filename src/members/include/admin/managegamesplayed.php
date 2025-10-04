@@ -29,7 +29,7 @@ $cID = $_GET['cID'];
 $gameObj = new Game($mysqli);
 $gameStatsObj = new Basic($mysqli, "gamestats", "gamestats_id");
 
-if ($_GET['gID'] == "") {
+if (!isset($_GET['gID']) || $_GET['gID'] == "") {
 	echo "
 		<div id='loadingSpiral' class='loadingSpiral'>
 			<p align='center'>

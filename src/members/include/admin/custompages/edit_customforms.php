@@ -286,19 +286,22 @@ if ( empty($_POST['submit']) ) {
 			
 					script_url: '".$MAIN_ROOT."js/tiny_mce/tiny_mce.js',
 					theme: 'advanced',
-					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,code,|,forecolorpicker,fontselect,fontsizeselect',
+					plugins: 'code',
+					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,codebbcode,|,forecolorpicker,fontselect,fontsizeselect',
 					theme_advanced_resizing: true
 				
 				});
 				
-				$('#tinymceSubmitMessage').tinymce({
-			
-					script_url: '".$MAIN_ROOT."js/tiny_mce/tiny_mce.js',
-					theme: 'advanced',
-					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,code,|,forecolorpicker,fontselect,fontsizeselect',
-					theme_advanced_resizing: true
+				setTimeout(function() {
+					$('#tinymceSubmitMessage').tinymce({
 				
-				});
+						script_url: '".$MAIN_ROOT."js/tiny_mce/tiny_mce.js',
+						theme: 'advanced',
+						theme_advanced_buttons1: 'bold,italic,underline',
+						theme_advanced_resizing: true
+					
+					});
+				}, 100);
 			
 				
 				$('#loadingSpiral').show();

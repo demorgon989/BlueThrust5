@@ -33,7 +33,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 
 
 
-if ($_GET['cnID'] == "") {
+if (!isset($_GET['cnID']) || $_GET['cnID'] == "") {
 	echo "
 	<div id='loadingSpiral' class='loadingSpiral'>
 		<p align='center'>

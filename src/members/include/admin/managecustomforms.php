@@ -4,7 +4,11 @@
  * BlueThrust Clan Scripts
  * Copyright 2014
  *
- * Author: Bluethrust Web Development
+ * Author: Bluethru							$.post('".$MAIN_ROOT."members/include/admin/custompages/delete_customforms.php', {
+								cpID: intCPID, confirm: 1 }, function(data1) {
+									// Reload the page to show updated content
+									window.location.reload();
+								}); Development
  * E-mail: support@bluethrust.com
  * Website: http://www.bluethrust.com
  *
@@ -24,7 +28,7 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 }
 $cID = $_GET['cID'];
 $intAddCustomPageID = $consoleObj->findConsoleIDByName("Add Custom Form Page");
-if ($_GET['cfID'] == "") {
+if (!isset($_GET['cfID']) || $_GET['cfID'] == "") {
 	echo "
 	
 		<table class='formTable' style='border-spacing: 1px; margin-left: auto; margin-right: auto'>
@@ -76,7 +80,7 @@ if ($_GET['cfID'] == "") {
 							$('#contentDiv').hide();
 							$(this).dialog('close');
 							$.post('".$MAIN_ROOT."members/include/admin/custompages/delete_customforms.php', {
-								cpID: intCPID, confirm: 1 }, function(data1) {
+								cpID: intCPID, cID: ".$cID.", confirm: 1 }, function(data1) {
 									$('#contentDiv').html(data1);
 									$('#loadingSpiral').hide();
 									$('#contentDiv').fadeIn(400);
