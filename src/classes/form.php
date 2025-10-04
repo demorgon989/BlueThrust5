@@ -225,7 +225,7 @@ class Form {
 								</select>
 						";
 
-					if ($componentInfo['options']['show_timezone'] == 1) {
+					if (isset($componentInfo['options']['show_timezone']) && $componentInfo['options']['show_timezone'] == 1) {
 						$displayForm .= "
 								<select name='".$componentName."_timezone' ".$dispAttributes.">
 									<option value=''>[Use Default]</option>
@@ -236,7 +236,7 @@ class Form {
 							$dispSign = ($dispOffset < 0) ? "" : "+";
 
 							$selected = "";
-							if ($componentInfo['options']['selected_timezone'] == $timeZone) {
+							if (isset($componentInfo['options']['selected_timezone']) && $componentInfo['options']['selected_timezone'] == $timeZone) {
 								$selected = " selected";
 							}
 
@@ -256,7 +256,7 @@ class Form {
 					$selectBoxObj = new SelectBox();
 					$selectBoxObj->setComponentName($componentName);
 					$selectBoxObj->setAttributes($componentInfo['attributes']);
-					$selectBoxObj->setOptions($componentInfo['options']);
+					$selectBoxObj->setOptions($componentInfo['options'] ?? []);
 					$selectBoxObj->setComponentValue($componentInfo['value'] ?? '');
 					$selectBoxObj->setNonSelectableItems($componentInfo['non_selectable_items'] ?? '');
 					$displayForm .= $selectBoxObj->getHTML();
@@ -305,11 +305,11 @@ class Form {
 								File:<br>
 								<input type='file' name='".$componentName."_file' ".$dispAttributes.">
 								<ul class='tinyFont' style='margin-top: 0px'>";
-					if (is_array($componentInfo['options']['file_types'])) {
+					if (isset($componentInfo['options']['file_types']) && is_array($componentInfo['options']['file_types'])) {
 						$displayForm .= "<li>File Types: ".implode(", ", $componentInfo['options']['file_types'])."</li>";
 					}
 
-					if (($componentInfo['options']['default_dimensions'] ?? '') != "") {
+					if (isset($componentInfo['options']['default_dimensions']) && $componentInfo['options']['default_dimensions'] != "") {
 						$displayForm .= "<li>Dimensions: ".$componentInfo['options']['default_dimensions']."</li>";
 					}
 
@@ -327,11 +327,11 @@ class Form {
 					break;
 				case "section":
 					$displayForm .= "<div ".$dispAttributes.">";
-					if ($componentInfo['options']['section_title'] != "") {
+					if (isset($componentInfo['options']['section_title']) && $componentInfo['options']['section_title'] != "") {
 						$displayForm .= "<p class='dottedLine' style='margin: 0px; margin-top: 25px; padding-bottom: 2px'><b>".$componentInfo['options']['section_title']."</b></p>";
 					}
 
-					if (($componentInfo['options']['section_description'] ?? '') != "") {
+					if (isset($componentInfo['options']['section_description']) && $componentInfo['options']['section_description'] != "") {
 						$displayForm .= "<p>".$componentInfo['options']['section_description']."</p>";
 					}
 
@@ -346,14 +346,16 @@ class Form {
 					break;
 				case "beforeafter":
 					$this->beforeAfter = true;
-					foreach ($componentInfo['options'] as $optionValue => $displayValue) {
-						$dispSelected = "";
-						if ($optionValue == ($componentInfo['before_after_value'] ?? '')) {
-							$dispSelected = " selected";
-						}
+					if (isset($componentInfo['options']) && is_array($componentInfo['options'])) {
+						foreach ($componentInfo['options'] as $optionValue => $displayValue) {
+							$dispSelected = "";
+							if ($optionValue == ($componentInfo['before_after_value'] ?? '')) {
+								$dispSelected = " selected";
+							}
 
-						if ($optionValue != ($componentInfo['value'] ?? '')) {
-							$displayOptions .= "<option value='".$optionValue."'".$dispSelected.">".$displayValue."</option>";
+							if ($optionValue != ($componentInfo['value'] ?? '')) {
+								$displayOptions .= "<option value='".$optionValue."'".$dispSelected.">".$displayValue."</option>";
+							}
 						}
 					}
 
@@ -444,7 +446,7 @@ class Form {
 		if ($this->saveType == "update") {
 			$info = $this->objSave->get_info_filtered();
 			foreach ($this->components as $key => $value) {
-				if ($this->components[$key]['db_name'] != "" && !in_array($this->components[$key]['db_name'], $this->arrSkipPrefill)) {
+				if (isset($this->components[$key]['db_name']) && $this->components[$key]['db_name'] != "" && !in_array($this->components[$key]['db_name'], $this->arrSkipPrefill)) {
 					$this->components[$key]['value'] = $info[$this->components[$key]['db_name']];
 				}
 			}
@@ -730,7 +732,7 @@ class Form {
 			foreach ($this->components as $componentName => $componentInfo) {
 				if (isset($componentInfo['db_name']) && $componentInfo['db_name'] != "") {
 					$arrColumns[] = $componentInfo['db_name'];
-					$arrValues[] = $_POST[$componentName];
+					$arrValues[] = $_POST[$componentName] ?? '';
 				}
 
 				if ($componentInfo['type'] == "beforeafter") {
@@ -920,7 +922,7 @@ class Form {
 		// Auto-detect dark themes and generate appropriate CSS
 		$isDarkTheme = in_array($THEME, ['ghost', 'battlecity']) || $this->isDarkTheme();
 		$editorCSS = $isDarkTheme ? $this->generateDarkModeCSS() : MAIN_ROOT."themes/".$THEME."/btcs4.css";
-
+		
 		// Set skin based on theme
 		$skin = $isDarkTheme ? 'oxide-dark' : 'oxide';
 
@@ -939,7 +941,6 @@ class Form {
 		
 		$GLOBALS['rtCompID'] = $componentID;
 		$hooksObj->run("form_richtexteditor");
-
 		unset($GLOBALS['rtCompID']);
 
 		return $GLOBALS['richtextEditor'];
