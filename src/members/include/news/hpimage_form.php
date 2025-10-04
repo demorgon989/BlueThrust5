@@ -134,7 +134,7 @@ $setupFormArgs = [
 			"components" => $arrComponents,
 			"description" => "Use the form below to add an image to the home page image slider.",
 			"saveObject" => $imageSliderObj,
-			"saveMessage" => "Successfully Added New Home Page Image: <b>".filterText($_POST['name'])."</b>!",
+			"saveMessage" => "Successfully Added New Home Page Image: <b>".filterText(($_POST['name'] ?? ''))."</b>!",
 			"saveType" => "add",
 			"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 			"beforeAfter" => true

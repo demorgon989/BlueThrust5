@@ -37,7 +37,7 @@ $arrComponents = [
 		"type" => "password",
 		"sortorder" => 2,
 		"attributes" => ["class" => "textBox formInput", "id" => "newpassword"],
-		"validate" => ["NOT_BLANK", ["name" => "EQUALS_VALUE", "value" => $_POST['newpassword1']], ["name" => "CHECK_LENGTH", "min_length" => 4]]
+		"validate" => ["NOT_BLANK", ["name" => "EQUALS_VALUE", "value" => ($_POST['newpassword1'] ?? '')], ["name" => "CHECK_LENGTH", "min_length" => 4]]
 	],
 	"newpassword1" => [
 		"display_name" => "Re-type New Password",

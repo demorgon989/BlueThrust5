@@ -128,7 +128,7 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel' valign='top'>Message:</td>
-						<td class='main'><textarea name='message' class='textBox' rows='5' cols='40'>".$_POST['message']."</textarea></td>
+						<td class='main'><textarea name='message' class='textBox' rows='5' cols='40'>".($_POST['message'] ?? '')."</textarea></td>
 					</tr>
 					<tr>
 						<td class='main' align='center' colspan='2'><br>

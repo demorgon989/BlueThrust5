@@ -32,7 +32,7 @@ function filterArray($arrValues) {
 }
 
 function filterText($strText) {
-	$temp = str_replace("<", "&lt;", $strText);
+	$temp = str_replace("<", "&lt;", $strText ?? '');
 	$value = str_replace(">", "&gt;", $temp);
 	$temp = str_replace("'", "&#39;", $value);
 	$value = str_replace('"', '&quot;', $temp);

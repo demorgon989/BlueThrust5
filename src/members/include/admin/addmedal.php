@@ -134,7 +134,7 @@ $setupFormArgs = [
 		"components" => $arrComponents,
 		"description" => "Fill out the form below to add a new medal.<br><br><b><u>NOTE:</u></b> When adding a Medal Image, if both the File and URL are filled out, the File will be used.",
 		"saveObject" => $medalObj,
-		"saveMessage" => "Successfully Added New Medal: <b>".filterText($_POST['medalname'])."</b>!",
+		"saveMessage" => "Successfully Added New Medal: <b>".filterText(($_POST['medalname'] ?? ''))."</b>!",
 		"saveType" => "add",
 		"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 		"beforeAfter" => true

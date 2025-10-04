@@ -152,5 +152,5 @@ $setupFormArgs = [
 	"saveMessage" => "Successfully saved e-mail notification settings!",
 	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 	"description" => "Use the form below to set your e-mail notification settings.",
-	"saveAdditional" => ["tournament_unit" => $_POST['tournament_unitbefore'], "event_unit" => "event_unitbefore"]
+	"saveAdditional" => ["tournament_unit" => ($_POST['tournament_unitbefore'] ?? ''), "event_unit" => "event_unitbefore"]
 ];

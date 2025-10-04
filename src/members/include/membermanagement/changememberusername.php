@@ -166,7 +166,7 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel'>New Username:</td>
-						<td class='main'><input type='text' name='newusername' class='textBox' value='".$_POST['newusername']."'></td>
+						<td class='main'><input type='text' name='newusername' class='textBox' value='".($_POST['newusername'] ?? '')."'></td>
 					</tr>
 					<tr>
 						<td class='main' align='center' colspan='2'><br>

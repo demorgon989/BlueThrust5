@@ -16,6 +16,7 @@ $_SESSION['btAccessCacheTables'][$accessObj->cacheID] = json_encode($accessObj->
 $_SESSION['btAccessCacheTypes'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTypes);
 
 
+$dispError = "";
 $dispPollQuestion = (strlen($pollInfo['question']) > 50) ? substr($pollInfo['question'], 0, 50) : $pollInfo['question'];
 
 echo "
@@ -29,6 +30,7 @@ echo "
 	";
 
 if ( ! empty($_POST['submit']) ) {
+	$countErrors = 0;
 	// Check Question
 	if (trim($_POST['pollquestion']) == "") {
 		$countErrors++;

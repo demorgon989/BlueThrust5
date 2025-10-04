@@ -158,6 +158,7 @@ if ($rankInfo['rank_id'] == 1) {
 
 $arrRanks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND ordernum > 2 AND rank_id != '1' ORDER BY ordernum DESC");
+$rankoptions = "";
 while ($row = $result->fetch_assoc()) {
 	$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";
 	$arrRanks[] = $row['rank_id'];
@@ -203,7 +204,7 @@ echo "
 				</tr>
 				<tr>
 					<td class='formLabel' valign='top'>Reason:</td>
-					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
+					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".($_POST['reason'] ?? '')."</textarea></td>
 				</tr>
 				<tr>
 					<td class='formLabel'>Freeze Member: <a href='javascript:void(0)' onmouseover=\"showToolTip('When demoting a member, they may be auto-promoted due to the number of days they are in the clan.  Set how long you want to keep the member demoted before being auto-promoted again.')\" onmouseout='hideToolTip()'>(?)</a></td>

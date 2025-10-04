@@ -106,6 +106,7 @@ if ( ! empty($_POST['submit']) ) {
 if ( empty($_POST['submit']) ) {
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");
+	$memberoptions = "";
 	while ($row = $result->fetch_assoc()) {
 		$rankObj->select($row['rank_id']);
 		$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
@@ -136,7 +137,7 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel' valign='top'>Reason:</td>
-						<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
+						<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".($_POST['reason'] ?? '')."</textarea></td>
 					</tr>
 					<tr>
 						<td class='main' align='center' colspan='2'><br>		

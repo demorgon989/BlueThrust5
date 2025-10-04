@@ -68,6 +68,9 @@ if ($_POST['submit'] && !$_POST['approve']) {
 	$arrColumns = [];
 	$arrValues = [];
 
+	$dispError = "";
+	$countErrors = 0;
+
 	// Check Winner
 	$arrWinners = [0,1,2];
 	if (!in_array($_POST['matchwinner'], $arrWinners)) {

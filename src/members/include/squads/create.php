@@ -131,7 +131,7 @@ if ( empty($_POST['submit']) ) {
 				<table class='formTable'>
 					<tr>
 						<td class='formLabel'>Squad Name:</td>
-						<td class='main'><input type='text' name='squadname' value='".$_POST['squadname']."' class='textBox' style='width: 250px'></td>
+						<td class='main'><input type='text' name='squadname' value='".($_POST['squadname'] ?? '')."' class='textBox' style='width: 250px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel' valign='top'>Squad Logo:</td>
@@ -140,19 +140,19 @@ if ( empty($_POST['submit']) ) {
 							<span style='font-size: 10px'>&nbsp;&nbsp;&nbsp;<b>&middot;</b> Dimensions: 400x100 pixels<br>&nbsp;&nbsp;&nbsp;<b>&middot;</b> File Types: .jpg, .gif, .png, .bmp<br>&nbsp;&nbsp;&nbsp;<b>&middot;</b> <a href='javascript:void(0)' onmouseover=\"showToolTip('The file size upload limit is controlled by your PHP settings in the php.ini file.')\" onmouseout='hideToolTip()'>File Size: ".ini_get("upload_max_filesize")."B or less</a></span>
 							<p><br><b><i>OR</i></b><br></p>
 							URL:<br>
-							<input type='text' class='textBox' name='logourl' value='".$_POST['logourl']."' style='width: 250px'>
+							<input type='text' class='textBox' name='logourl' value='".($_POST['logourl'] ?? '')."' style='width: 250px'>
 						</td>
 					</tr>
 					<tr>
 						<td class='formLabel' valign='top'>Squad Website: <a href='javascript(0)' onmouseover=\"showToolTip('Leave blank to disable website from showing on the squad profile page.')\" onmouseout='hideToolTip()'>(?)</a></td>
 						<td class='main'>
-							<input type='text' name='squadsite' value='".$_POST['squadsite']."' class='textBox' style='width: 250px'>
+							<input type='text' name='squadsite' value='".($_POST['squadsite'] ?? '')."' class='textBox' style='width: 250px'>
 						</td>
 					</tr>
 					<tr>
 						<td class='formLabel' valign='top'>About the Squad:</td>
 						<td class='main'>
-							<textarea name='squaddesc' class='textBox' cols='40' rows='5'>".$_POST['squaddesc']."</textarea>
+							<textarea name='squaddesc' class='textBox' cols='40' rows='5'>".($_POST['squaddesc'] ?? '')."</textarea>
 						</td>
 					</tr>
 					<tr>

@@ -146,7 +146,7 @@ if ( empty($_POST['submit']) ) {
 							File:<br><input type='file' name='statusimagefile' class='textBox' style='width: 250px; border: 0px'><br>
 							<span style='font-size: 10px'>File Types: .jpg, .gif, .png, .bmp | <a href='javascript:void(0)' onmouseover=\"showToolTip('The file size upload limit is controlled by your PHP settings in the php.ini file.')\" onmouseout='hideToolTip()'>File Size: ".ini_get("upload_max_filesize")."B or less</a></span>
 							<p><b><i>OR</i></b></p>
-							URL:<br><input type='text' name='statusimageurl' value='".$_POST['statusimageurl']."' class='textBox' style='width: 250px'>
+							URL:<br><input type='text' name='statusimageurl' value='".($_POST['statusimageurl'] ?? '')."' class='textBox' style='width: 250px'>
 						</td>
 					</tr>
 					<tr>

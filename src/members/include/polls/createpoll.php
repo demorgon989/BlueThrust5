@@ -251,7 +251,7 @@ if ( empty($_POST['submit']) ) {
 				<tr>
 					<td class='formLabel'>Max votes per user: <a href='javascript:void(0)' onmouseover=\"showToolTip('Leave blank or 0 for unlimited votes.')\" onmouseout=\"hideToolTip()\">(?)</a></td>
 					<td class='main'>
-						<input type='text' name='maxvotes' value='".$_POST['maxvotes']."' class='textBox' style='width: 10%'>
+						<input type='text' name='maxvotes' value='".($_POST['maxvotes'] ?? '')."' class='textBox' style='width: 10%'>
 					</td>
 				</tr>
 				<tr>
@@ -264,7 +264,7 @@ if ( empty($_POST['submit']) ) {
 						</select>
 						<div id='pickEndDateDiv' style='display: none'>
 							<br>
-							<input type='text' id='jqEndDate' name='fakeenddate' value='".$_POST['fakeenddate']."' class='textBox' readonly='readonly' style='cursor: pointer'>
+							<input type='text' id='jqEndDate' name='fakeenddate' value='".($_POST['fakeenddate'] ?? '')."' class='textBox' readonly='readonly' style='cursor: pointer'>
 							<p>
 							<select class='textBox' name='endhour'>".$hourOptions."</select> : 
 							<select class='textBox' name='endminute'>".$minuteOptions."</select>

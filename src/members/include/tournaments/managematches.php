@@ -37,6 +37,9 @@ $arrTournaments = $member->getTournamentList();
 $dispError = "";
 $countErrors = 0;
 
+$dispPools = "";
+$arrDispMatches = array();
+
 
 if (isset($_GET['mID']) && $tournamentObj->objMatch->select($_GET['mID'])) {
 	require_once("include/managematch.php");
