@@ -114,7 +114,7 @@ if ( empty($_POST['submit']) ) {
 					<b>Page Information</b>
 					<div class='dottedLine' style='width: 90%; padding-top: 3px; margin-bottom: 5px'></div>
 					<div style='padding-left: 3px; padding-bottom: 15px'>
-						Use the text editor below to format your custom page.  You may also use HTML by clicking the HTML button.
+						Use the text editor below to format your custom page.
 					</div>
 				</td>
 			</tr>
