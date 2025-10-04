@@ -46,6 +46,7 @@ $intAddProfileCatID = $consoleObj->findConsoleIDByName("Add Profile Category");
 $intHighestOrder = $profileCatObj->getHighestOrderNum();
 $counter = 0;
 $x = 1;
+$dispCats = "";
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {

@@ -27,7 +27,7 @@ require_once($prevFolder."classes/profilecategory.php");
 $profileCatObj = new ProfileCategory($mysqli);
 
 
-if ($_GET['action'] == "") {
+if (!isset($_GET['action']) || $_GET['action'] == "") {
 	echo "
 	
 		<div id='loadingSpiral' class='loadingSpiral'>
