@@ -12,8 +12,13 @@
  *
  */
 
-require_once($prevFolder."classes/basic.php");
-require_once($prevFolder."classes/btplugin.php");
+if (defined('BASE_DIRECTORY')) {
+	require_once(BASE_DIRECTORY."classes/basic.php");
+	require_once(BASE_DIRECTORY."classes/btplugin.php");
+} else {
+	require_once($prevFolder."classes/basic.php");
+	require_once($prevFolder."classes/btplugin.php");
+}
 
 class Youtube extends Basic {
 

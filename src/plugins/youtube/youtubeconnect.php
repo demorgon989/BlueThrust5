@@ -88,9 +88,17 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 	}
 
 	if (isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !isset($_GET['error'])) {
-		$arrURLInfo = parse_url($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
+		// Use same consistent callback URL for token exchange
+		$serverName = $_SERVER['SERVER_NAME'];
+		if (!strpos($serverName, '.') || (strpos($serverName, '.') && !strpos(substr($serverName, 0, strpos($serverName, '.')), '.'))) {
+			// If it's a bare domain like 'example.com', use 'www.example.com'
+			if (substr($serverName, 0, 4) !== 'www.') {
+				$serverName = 'www.' . $serverName;
+			}
+		}
+		$callbackURL = $dispHTTP . $serverName . "/plugins/youtube/youtubeconnect.php";
 
-		$response = $ytObj->getAccessToken($_GET['code'], $arrURLInfo['scheme']."://".$arrURLInfo['host'].$arrURLInfo['path']);
+		$response = $ytObj->getAccessToken($_GET['code'], $callbackURL);
 
 		if (isset($response['access_token'])) {
 			$ytObj->accessToken = $response['access_token'];
@@ -126,7 +134,16 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 		$countErrors++;
 		$dispError = "Unable to connect to Youtube! Please try again.";
 	} elseif (!isset($_GET['error']) && !isset($_GET['code'])) {
-		$loginLink = $ytObj->getConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
+		// Use consistent callback URL - force www. if domain doesn't already have a subdomain
+		$serverName = $_SERVER['SERVER_NAME'];
+		if (!strpos($serverName, '.') || (strpos($serverName, '.') && !strpos(substr($serverName, 0, strpos($serverName, '.')), '.'))) {
+			// If it's a bare domain like 'example.com', use 'www.example.com'
+			if (substr($serverName, 0, 4) !== 'www.') {
+				$serverName = 'www.' . $serverName;
+			}
+		}
+		$callbackURL = $dispHTTP . $serverName . "/plugins/youtube/youtubeconnect.php";
+		$loginLink = $ytObj->getConnectLink($callbackURL);
 		$_SESSION['btYoutubeNonce'] = $ytObj->tokenNonce;
 
 		echo "

@@ -42,10 +42,10 @@ $pluginsDir = scandir($prevFolder."plugins");
 $addCSS = "";
 $x = 0;
 foreach ($pluginsDir as $dir) {
-	// Skip deprecated plugins
+	// List of deprecated plugins
 	$deprecatedPlugins = ['twitter'];
 	
-	if (is_dir($prevFolder."plugins/".$dir) && $dir != "." && $dir != ".." && !in_array($dir, $pluginObj->getPlugins("filepath")) && !in_array($dir, $deprecatedPlugins) && (file_exists($prevFolder."plugins/".$dir."/install.php") || file_exists($prevFolder."plugins/".$dir."/install_setup.php"))) {
+	if (is_dir($prevFolder."plugins/".$dir) && $dir != "." && $dir != ".." && !in_array($dir, $pluginObj->getPlugins("filepath")) && (file_exists($prevFolder."plugins/".$dir."/install.php") || file_exists($prevFolder."plugins/".$dir."/install_setup.php"))) {
 		if ($x == 0) {
 			$x = 1;
 			$addCSS = "";
@@ -59,17 +59,27 @@ foreach ($pluginsDir as $dir) {
 			$pluginName = ucfirst($dir);
 		}
 
-		$installJSData = "";
-		if (file_exists(BASE_DIRECTORY."plugins/".$dir."/install_setup.php")) {
-			$installJSData = " data-install='1'";
-		}
+		// Check if plugin is deprecated
+		if (in_array($dir, $deprecatedPlugins)) {
+			$dispPlugins .= "
+				<tr>
+					<td class='dottedLine main manageList".$addCSS."' style='padding-left: 10px; color: #666;'>".$pluginName." <em>(Deprecated)</em></td>
+					<td class='dottedLine main manageList".$addCSS."' style='width: 24%; color: #999;' align='center'>API Deprecated</td>
+				</tr>			
+			";
+		} else {
+			$installJSData = "";
+			if (file_exists(BASE_DIRECTORY."plugins/".$dir."/install_setup.php")) {
+				$installJSData = " data-install='1'";
+			}
 
-		$dispPlugins .= "
+			$dispPlugins .= "
 				<tr>
 					<td class='dottedLine main manageList".$addCSS."' style='padding-left: 10px'>".$pluginName."</td>
 					<td class='dottedLine main manageList".$addCSS."' style='width: 24%' align='center'><a style='cursor: pointer' id='installPlugin' data-plugin='".$dir."' data-clicked='0'".$installJSData.">Install</a></td>
 				</tr>			
-		";
+			";
+		}
 	}
 }
 
@@ -80,7 +90,7 @@ if ($dispPlugins != "") {
 	echo "
 		<tr>
 			<td colspan='2' class='main' style='padding: 10px; font-size: 11px; color: #666;'>
-				<strong>Note:</strong> Some plugins (Twitter Connect) have been hidden because they are no longer functional due to external API changes.
+				<strong>Note:</strong> Deprecated plugins cannot be installed due to external API changes or discontinuation.
 			</td>
 		</tr>
 	";
