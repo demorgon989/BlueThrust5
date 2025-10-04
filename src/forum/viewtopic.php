@@ -17,7 +17,8 @@
 $prevFolder = "../";
 
 require_once($prevFolder."_setup.php");
-$btThemeObj->addHeadItem("richtexteditor1", "<script type='text/javascript' src='".$MAIN_ROOT."js/ckeditor/ckeditor.js'></script>");
+// Removed hardcoded CKEditor - TinyMCE is loaded by form class
+// $btThemeObj->addHeadItem("richtexteditor1", "<script type='text/javascript' src='".$MAIN_ROOT."js/ckeditor/ckeditor.js'></script>");
 
 $consoleObj = new ConsoleOption($mysqli);
 $boardObj = new ForumBoard($mysqli);
@@ -254,7 +255,7 @@ if (LOGGED_IN && $topicInfo['lockstatus'] == 0) {
 			"type" => "richtextbox",
 			"sortorder" => $i++,
 			"display_name" => "Message",
-			"attributes" => ["id" => "richTextarea", "style" => "width: 90%", "rows" => "10"],
+			"attributes" => ["id" => "richTextarea", "style" => "width: 90%", "rows" => "20"],
 			"validate" => ["NOT_BLANK"]
 		],
 		"submit" => [

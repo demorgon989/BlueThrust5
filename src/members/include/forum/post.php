@@ -207,7 +207,7 @@ $arrComponents = [
 		"type" => "richtextbox",
 		"sortorder" => $i++,
 		"display_name" => "Message",
-		"attributes" => ["id" => "richTextarea", "style" => "width: 90%", "rows" => "10"],
+		"attributes" => ["id" => "richTextarea", "style" => "width: 90%", "rows" => "20"],
 		"value" => $dispQuote,
 		"db_name" => "message",
 		"validate" => ["NOT_BLANK"]
