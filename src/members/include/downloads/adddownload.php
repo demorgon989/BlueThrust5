@@ -35,6 +35,9 @@ $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;
 
+$downloadcatoptions = "";
+$downloadCatJS = "";
+
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."downloadcategory WHERE specialkey = '' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrDownloadCat[] = $row['downloadcategory_id'];
@@ -172,12 +175,12 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel'>Title:</td>
-						<td class='main'><input type='text' value='".$_POST['title']."' class='textBox' name='title' style='width: 250px'></td>
+						<td class='main'><input type='text' value='".($_POST['title'] ?? '')."' class='textBox' name='title' style='width: 250px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel' valign='top'>Description:</td>
 						<td class='main'>
-							<textarea name='description' class='textBox' style='width: 250px; height: 100px'>".$_POST['description']."</textarea>
+							<textarea name='description' class='textBox' style='width: 250px; height: 100px'>".($_POST['description'] ?? '')."</textarea>
 						</td>
 					</tr>
 					<tr>

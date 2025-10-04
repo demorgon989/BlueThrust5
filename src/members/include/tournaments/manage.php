@@ -31,6 +31,7 @@ $tournamentObj = new Tournament($mysqli);
 
 $counter = 0;
 $dispTournamentNames = "";
+$dispTournamentOptions = "";
 $arrTournaments = $member->getTournamentList(true);
 $createTournamentCID = $consoleObj->findConsoleIDByName("Create a Tournament");
 echo "

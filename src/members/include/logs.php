@@ -46,7 +46,7 @@ if ($numOfPages < $_GET['page']) {
 	$_GET['page'] = $numOfPages;
 }
 
-
+$pageoptions = "";
 for ($i=1; $i<=$numOfPages; $i++) {
 	$dispSelected = "";
 	if ($_GET['page'] == $i) {
@@ -73,7 +73,7 @@ if ($_GET['page'] == 1 && $numOfPages > 1) {
 	$dispLinks = "&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&page=".($_GET['page']-1)."&show=".$_GET['show']."'>Previous</a>";
 }
 
-
+$showoptions = "";
 foreach ($arrShowPerPage as $numShowPerPage) {
 	$dispSelected = "";
 	if ($numShowPerPage == $_GET['show']) {

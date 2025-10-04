@@ -108,6 +108,8 @@ if ( ! empty($_POST['submit']) ) {
 
 if ( empty($_POST['submit']) ) {
 	$countCategories = 0;
+	$catOrderOptions = "";
+	$dispError = "";
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."downloadcategory ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {

@@ -181,7 +181,8 @@ class ForumPost extends Basic {
 	public function sendNotifications() {
 
 		if ($this->intTableKeyValue != "") {
-			$mailObj = new btMail();
+			global $webInfoObj;
+			$mailObj = $webInfoObj->objBTMail;
 			$member = new Member($this->MySQL);
 			$arrBCC = [];
 

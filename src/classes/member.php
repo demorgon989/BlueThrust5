@@ -420,9 +420,9 @@ class Member extends Basic {
 						}
 					}
 
-					if (count(arrBCC) > 0) {
-						$objMail = new btMail();
-						$objMail->sendMail("", $subject, $message, ["from" => $this->arrObjInfo['email'], "bcc" => $arrBCC]);
+					if (count($arrBCC) > 0) {
+						global $webInfoObj;
+						$webInfoObj->objBTMail->sendMail("", $subject, $message, ["bcc" => $arrBCC]);
 					}
 
 					$returnVal = true;
@@ -874,8 +874,18 @@ class Member extends Basic {
 	public function email($subject, $message, $from = "") {
 
 		if ($this->arrObjInfo['email'] != "") {
-			$objMail = new btMail();
-			$objMail->sendMail($this->arrObjInfo['email'], $subject, $message, ["from" => $from]);
+			global $CLAN_NAME, $siteDomain, $webInfoObj;
+			$additional = [];
+			if (!empty($from)) {
+				if (is_string($from)) {
+					// If from is a string, try to parse it or use clan name
+					$additional["from"] = ["email" => 'no-reply@'.$siteDomain, "name" => $CLAN_NAME];
+				} else {
+					$additional["from"] = $from;
+				}
+			}
+			// If from is empty, let btMail use the default (SMTP username)
+			$webInfoObj->objBTMail->sendMail($this->arrObjInfo['email'], $subject, $message, $additional);
 		}
 	}
 

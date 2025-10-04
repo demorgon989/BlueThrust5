@@ -144,7 +144,8 @@ http://".$_SERVER['SERVER_NAME'].$MAIN_ROOT."diplomacy/confirm-email.php?code=".
 Thanks,\n
 ".$websiteInfo['clanname'];
 
-			$sendMail = mail($emailTo, $emailSubject, $emailMessage, "From: ".$emailFrom);
+			// Use btMail for SMTP support
+			$sendMail = $webInfoObj->objBTMail->sendMail($emailTo, $emailSubject, $emailMessage);
 
 			if (!$sendMail) {
 				$emailCode = 1;

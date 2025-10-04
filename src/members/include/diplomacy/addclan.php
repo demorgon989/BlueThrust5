@@ -162,7 +162,7 @@ if ( empty($_POST['submit']) ) {
 				<table class='formTable'>
 					<tr>
 						<td class='formLabel'>Clan Name:</td>
-						<td class='main'><input type='text' name='clanname' value='".$_POST['clanname']."' class='textBox' style='width: 150px'></td>
+						<td class='main'><input type='text' name='clanname' value='".($_POST['clanname'] ?? '')."' class='textBox' style='width: 150px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Status:</td>
@@ -172,7 +172,7 @@ if ( empty($_POST['submit']) ) {
 
 	foreach ($arrDiplomacyStatus as $key => $value) {
 		$dispSelected = "";
-		if ($_POST['status'] == $key) {
+		if (($_POST['status'] ?? '') == $key) {
 			$dispSelected = " selected";
 		}
 
@@ -185,19 +185,19 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel'>Leader(s):</td>
-						<td class='main'><input type='text' name='leaders' value='".$_POST['leaders']."' class='textBox' style='width: 150px'></td>
+						<td class='main'><input type='text' name='leaders' value='".($_POST['leaders'] ?? '')."' class='textBox' style='width: 150px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Website:</td>
-						<td class='main'><input type='text' name='website' class='textBox' value='".$_POST['website']."' style='width: 150px'></td>
+						<td class='main'><input type='text' name='website' class='textBox' value='".($_POST['website'] ?? '')."' style='width: 150px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Games Played:</td>
-						<td class='main'><input type='text' name='gamesplayed' value='".$_POST['gamesplayed']."' class='textBox' style='width: 150px'></td>
+						<td class='main'><input type='text' name='gamesplayed' value='".($_POST['gamesplayed'] ?? '')."' class='textBox' style='width: 150px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Skill Level:</td>
-						<td class='main'><input type='text' name='skill' class='textBox' value='".$_POST['skill']."' style='width: 150px'></td>
+						<td class='main'><input type='text' name='skill' class='textBox' value='".($_POST['skill'] ?? '')."' style='width: 150px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Clan Size:</td>
@@ -211,12 +211,12 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel'>Tag:</td>
-						<td class='main'><input type='text' name='tag' class='textBox' value='".$_POST['tag']."' style='width: 50px'></td>
+						<td class='main'><input type='text' name='tag' class='textBox' value='".($_POST['tag'] ?? '')."' style='width: 50px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel' valign='top'>Extra Info:</td>
 						<td class='main' valign='top'>
-							<textarea rows='4' cols='55' name='extrainfo' class='textBox'>".$_POST['extrainfo']."</textarea>
+							<textarea rows='4' cols='55' name='extrainfo' class='textBox'>".($_POST['extrainfo'] ?? '')."</textarea>
 						</td>
 					</tr>
 					<tr>

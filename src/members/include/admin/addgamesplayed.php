@@ -256,7 +256,7 @@ if ( empty($_POST['submit']) ) {
 				</tr>
 				<tr>
 					<td class='formLabel'>Game Name:</td>
-					<td class='main'><input type='text' name='gamename' value='".$_POST['gamename']."' class='textBox' style='width: 250px'></td>	
+					<td class='main'><input type='text' name='gamename' value='".($_POST['gamename'] ?? '')."' class='textBox' style='width: 250px'></td>	
 				</tr>
 				<tr>
 					<td class='formLabel' valign='top'>Game Image:</td>
@@ -264,19 +264,19 @@ if ( empty($_POST['submit']) ) {
 						File:<br><input type='file' name='gameimagefile' class='textBox' style='width: 250px; border: 0px'><br>
 						<span style='font-size: 10px'>File Types: .jpg, .gif, .png, .bmp | <a href='javascript:void(0)' onmouseover=\"showToolTip('The file size upload limit is controlled by your PHP settings in the php.ini file.')\" onmouseout='hideToolTip()'>File Size: ".ini_get("upload_max_filesize")."B or less</a></span>
 						<p><b><i>OR</i></b></p>
-						URL:<br><input type='text' name='gameimageurl' value='".$_POST['gameimageurl']."' class='textBox' style='width: 250px'>
+						URL:<br><input type='text' name='gameimageurl' value='".($_POST['gameimageurl'] ?? '')."' class='textBox' style='width: 250px'>
 					</td>
 				</tr>
 				<tr>
 					<td class='formLabel'>Image Width: <a href='javascript:void(0)' onmouseover=\"showToolTip('Set the Image Width to the width that you would like the Game Image to be displayed on your website.')\" onmouseout='hideToolTip()'>(?)</a></td>
 					<td class='main'>
-						<input type='text' name='gameimagewidth' value='".$_POST['gameimagewidth']."' class='textBox' style='width: 40px'> <i>px</i>
+						<input type='text' name='gameimagewidth' value='".($_POST['gameimagewidth'] ?? '')."' class='textBox' style='width: 40px'> <i>px</i>
 					</td>
 				</tr>
 				<tr>
 					<td class='formLabel'>Image Height: <a href='javascript:void(0)' onmouseover=\"showToolTip('Set the Image Height to the height that you would like the Game Image to be displayed on your website.')\" onmouseout='hideToolTip()'>(?)</a></td>
 					<td class='main'>
-						<input type='text' name='gameimageheight' value='".$_POST['gameimageheight']."' class='textBox' style='width: 40px'> <i>px</i>
+						<input type='text' name='gameimageheight' value='".($_POST['gameimageheight'] ?? '')."' class='textBox' style='width: 40px'> <i>px</i>
 					</td>
 				</tr>
 				<tr>

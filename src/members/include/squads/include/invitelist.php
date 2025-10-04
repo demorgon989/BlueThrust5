@@ -12,10 +12,9 @@
  *
  */
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/rank.php");
-require_once("../../../../classes/squad.php");
+require_once($prevFolder."classes/member.php");
+require_once($prevFolder."classes/rank.php");
+require_once($prevFolder."classes/squad.php");
 
 
 // Start Page

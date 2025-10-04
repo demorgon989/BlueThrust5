@@ -171,6 +171,7 @@ if ($rankInfo['rank_id'] == 1) {
 
 $arrRanks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
+$rankoptions = "";
 while ($row = $result->fetch_assoc()) {
 	$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";
 	$arrRanks[] = $row['rank_id'];
@@ -183,6 +184,7 @@ while ($row = $result->fetch_assoc()) {
 $sqlRanks = "('".implode("','", $arrMemRanks)."')";
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."'  ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
+$memberoptions = "";
 while ($row = $result->fetch_assoc()) {
 	$rankObj->select($row['rank_id']);
 	$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
@@ -218,7 +220,7 @@ echo "
 				</tr>
 				<tr>
 					<td class='formLabel' valign='top'>Reason:</td>
-					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
+					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".($_POST['reason'] ?? '')."</textarea></td>
 				</tr>
 				<tr>
 					<td class='formLabel'>Freeze Member: <a href='javascript:void(0)' onmouseover=\"showToolTip('When demoting a member, they may be auto-promoted due to the number of days they are in the clan.  Set how long you want to keep the member demoted before being auto-promoted again.')\" onmouseout='hideToolTip()'>(?)</a></td>

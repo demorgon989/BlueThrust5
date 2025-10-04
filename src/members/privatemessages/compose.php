@@ -100,7 +100,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			"display_name" => "Subject",
 			"attributes" => ["class" => "formInput textBox bigTextBox"],
 			"sortorder" => $i++,
-			"value" => $_POST['subject']
+			"value" => $_POST['subject'] ?? ''
 		],
 		"message" => [
 			"type" => "textarea",

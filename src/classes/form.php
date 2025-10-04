@@ -180,7 +180,7 @@ class Form {
 					$arrTimezones = DateTimeZone::listIdentifiers();
 
 					$datePick = new DateTime();
-					$datePick->setTimestamp($componentInfo['value']/1000);
+					$datePick->setTimestamp(($componentInfo['value'] ?? 0)/1000);
 					$datePick->setTimezone(new DateTimeZone("UTC"));
 
 					$selectedHour = $datePick->format("g");
@@ -280,7 +280,7 @@ class Form {
 								$componentCounter++;
 							}
 
-							if ($optionValue == $componentInfo['value']) {
+							if ($optionValue == ($componentInfo['value'] ?? '')) {
 								$dispSelected = " checked";
 							}
 

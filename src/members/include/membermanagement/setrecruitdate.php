@@ -29,6 +29,8 @@ $cID = $_GET['cID'];
 $memberObj = new Member($mysqli);
 $rankObj = new Rank($mysqli);
 
+$dispError = "";
+
 $rankObj->select($memberInfo['rank_id']);
 $rankInfo = $rankObj->get_info();
 if ($memberInfo['promotepower'] != 0) {
@@ -47,6 +49,7 @@ if ($memberInfo['rank_id'] == 1) {
 }
 
 if ( ! empty($_POST['submit']) ) {
+	$countErrors = 0;
 	if (!$memberObj->select($_POST['member'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
@@ -103,6 +106,7 @@ if ( ! empty($_POST['submit']) ) {
 
 if ( empty($_POST['submit']) ) {
 	$result = $mysqli->query("SELECT ".$dbprefix."members.member_id FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."ranks.ordernum <= '".$powerRankInfo['ordernum']."' AND ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
+	$memberoptions = "";
 	while ($row = $result->fetch_assoc()) {
 		$memberObj->select($row['member_id']);
 		$tempMemInfo = $memberObj->get_info_filtered();

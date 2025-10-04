@@ -159,6 +159,7 @@ if ( empty($_POST['submit']) ) {
 		$houroptions .= "<option value='".$i."'>".$i."</option>";
 	}
 
+	$minuteoptions = "";
 	for ($i=0; $i<=59; $i++) {
 		if ($i < 10) {
 			$dispI = "0".$i;
@@ -203,7 +204,7 @@ if ( empty($_POST['submit']) ) {
 					<tr>
 						<td class='formLabel' valign='top'>Title:</td>
 						<td class='main' valign='top'>
-							<input type='text' name='eventtitle' value='".$_POST['eventtitle']."' class='textBox' style='width: 200px'><br>
+							<input type='text' name='eventtitle' value='".($_POST['eventtitle'] ?? '')."' class='textBox' style='width: 200px'><br>
 							<span class='tinyFont'>(Max 30 characters)</span>
 						</td>
 					</tr>
@@ -217,7 +218,7 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel'>Location:</td>
-						<td class='main'><input type='text' name='eventlocation' value='".$_POST['eventlocation']."' class='textBox' style='width: 200px'></td>
+						<td class='main'><input type='text' name='eventlocation' value='".($_POST['eventlocation'] ?? '')."' class='textBox' style='width: 200px'></td>
 					</tr>
 					";/*<tr>
 						<td class='formLabel'>Invite Type:</td>
@@ -244,7 +245,7 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel' valign='top'>Event Details:</td>
-						<td class='main' valign='top'><textarea class='textBox' name='eventdetails' style='width: 250px; height: 95px'>".$_POST['eventdetails']."</textarea></td>
+						<td class='main' valign='top'><textarea class='textBox' name='eventdetails' style='width: 250px; height: 95px'>".($_POST['eventdetails'] ?? '')."</textarea></td>
 					</tr>
 					<tr>
 						<td class='main' align='center' colspan='2'><br>

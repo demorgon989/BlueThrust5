@@ -67,11 +67,13 @@ while ($row = $result->fetch_assoc()) {
 
 $sqlRanks = "('".implode("','", $arrRanks)."')";
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
+$memberOptions = [];
 while ($row = $result->fetch_assoc()) {
 	$rankObj->select($row['rank_id']);
 	$memberOptions[$row['member_id']] = $rankObj->get_info_filtered("name")." ".filterText($row['username']);
 }
 
+$medalOptions = [];
 if ( ! empty($_POST['submit']) ) {
 	$member->select($_POST['member']);
 	$arrMedals = $member->getMedalList();

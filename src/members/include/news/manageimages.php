@@ -29,7 +29,7 @@ require_once($prevFolder."classes/imageslider.php");
 $cID = $_GET['cID'];
 $imageSliderObj = new ImageSlider($mysqli);
 
-if ($_GET['action'] == "edit" && $imageSliderObj->select($_GET['imgID'])) {
+if (($_GET['action'] ?? '') == "edit" && $imageSliderObj->select($_GET['imgID'])) {
 	require_once("include/news/include/editimage.php");
 } else {
 	$addImageCID = $consoleObj->findConsoleIDByName("Add Home Page Image");

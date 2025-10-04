@@ -144,6 +144,7 @@ if ($rankInfo['rank_id'] == 1) {
 
 $arrRanks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
+$rankoptions = "";
 while ($row = $result->fetch_assoc()) {
 	$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";
 	$arrRanks[] = $row['rank_id'];
@@ -187,7 +188,7 @@ echo "
 				</tr>
 				<tr>
 					<td class='formLabel' valign='top'>Reason:</td>
-					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
+					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".($_POST['reason'] ?? '')."</textarea></td>
 				</tr>
 				<tr>
 					<td class='main' align='center' colspan='2'><br>		

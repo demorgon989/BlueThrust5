@@ -33,6 +33,9 @@ class WebsiteInfo extends Basic {
 				$this->arrKeys[$row['name']] = $row['websiteinfo_id'];
 			}
 			$this->blnRefreshInfo = false;
+			
+			// Update btMail with SMTP settings
+			$this->updateBTMailSettings();
 		} else {
 			$this->arrObjInfo = $temp;
 		}
@@ -40,6 +43,21 @@ class WebsiteInfo extends Basic {
 		return $returnVal;
 	}
 
+
+	/** Update btMail object with current SMTP settings */
+	private function updateBTMailSettings() {
+		$smtpSettings = [
+			'smtp_mode' => $this->arrObjInfo['smtp_mode'] ?? 'auto',
+			'smtp_host' => $this->arrObjInfo['smtp_host'] ?? '',
+			'smtp_port' => $this->arrObjInfo['smtp_port'] ?? '',
+			'smtp_username' => $this->arrObjInfo['smtp_username'] ?? '',
+			'smtp_password' => $this->arrObjInfo['smtp_password'] ?? '',
+			'smtp_encryption' => $this->arrObjInfo['smtp_encryption'] ?? ''
+		];
+		
+		// Create new btMail instance with updated settings
+		$this->objBTMail = new btMail($smtpSettings);
+	}
 
 	public function multiUpdate($arrSettings, $arrValues) {
 
@@ -54,6 +72,12 @@ class WebsiteInfo extends Basic {
 					$countErrors++;
 				}
 			}
+		}
+
+		// Refresh settings and update btMail after changes
+		if ($countErrors == 0) {
+			$this->blnRefreshInfo = true;
+			$this->select(1);
 		}
 
 		return ($countErrors == 0);

@@ -93,6 +93,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 $result = $mysqli->query("SELECT ".$dbprefix."members.* FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
+$memberoptions = "";
 while ($row = $result->fetch_assoc()) {
 	$rankObj->select($row['rank_id']);
 	$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
@@ -127,7 +128,7 @@ echo "
 				</tr>
 				<tr>
 					<td class='formLabel' valign='top'>Reason:</td>
-					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
+					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".($_POST['reason'] ?? '')."</textarea></td>
 				</tr>
 				<tr>
 					<td class='main' align='center' colspan='2'><br>		

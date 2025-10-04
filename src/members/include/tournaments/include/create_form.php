@@ -175,7 +175,7 @@ $arrComponents = [
 			"tooltip" => "Leave blank for no password",
 			"sortorder" => $i++,
 			"attributes" => ["class" => "formInput textBox", "id" => "tournamentpw"],
-			"validate" => [["name" => "EQUALS_VALUE", "value" => $_POST['tournamentpw_check']]]
+			"validate" => [["name" => "EQUALS_VALUE", "value" => ($_POST['tournamentpw_check'] ?? '')]]
 		],
 		"tournamentpw_check" => [
 			"type" => "password",
@@ -205,7 +205,7 @@ $setupFormArgs = [
 		"saveMessage" => "Successfully Created New Tournament!",
 		"saveType" => "add",
 		"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
-		"saveAdditional" => ["password" => md5($_POST['tournamentpw']), "timezone" => $_POST['starttime_timezone'], "member_id" => $memberInfo['member_id']]
+		"saveAdditional" => ["password" => md5(($_POST['tournamentpw'] ?? '')), "timezone" => ($_POST['starttime_timezone'] ?? ''), "member_id" => $memberInfo['member_id']]
 	];
 
 	?>
