@@ -928,12 +928,11 @@ class Form {
 
 		$GLOBALS['richtextEditor'] = "
 			$(document).ready(function() {
-				$('#".$componentID."').tinymce({
-					script_url: '".addslashes(MAIN_ROOT)."js/tiny_mce/tinymce.min.js',
+				tinymce.init({
+					selector: '#".$componentID."',
 					skin: '".addslashes($skin)."',
 					content_css: '".addslashes($editorCSS)."',
 					plugins: 'emoticons',
-					theme: 'modern',
 					toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink image emoticons | quotebbcode codebbcode".$addHTML."',
 					menubar: false,
 					statusbar: false,
