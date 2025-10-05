@@ -933,9 +933,11 @@ class Form {
 					skin: '".addslashes($skin)."',
 					content_css: '".addslashes($editorCSS)."',
 					plugins: 'emoticons',
-					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,alignleft,aligncenter,alignright,|,bullist,numlist,|,link,unlink,image,emoticons,|,quotebbcode,codebbcode".$addHTML.",',
-					theme_advanced_buttons2: 'forecolor,fontselect,fontsizeselect',
-					theme_advanced_resizing: true
+					theme: 'modern',
+					toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink image emoticons | quotebbcode codebbcode".$addHTML."',
+					menubar: false,
+					statusbar: false,
+					resize: true
 				});
 			});
 		";
