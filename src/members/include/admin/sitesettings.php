@@ -176,6 +176,26 @@ foreach ([10,25,50,100] as $value) {
 			<td class='main'><input type='text' id='emailqueue_delay' value='<?php echo $websiteInfo['emailqueue_delay']; ?>' class='textBox' style='width: 30px'> minutes</td>
 		</tr>
 		<tr>
+			<td class='formLabel'>SMTP Mode: <a href='javascript:void(0)' onmouseover="showToolTip('Choose how emails are sent: Auto (tries SMTP then falls back to PHP mail), SMTP (uses SMTP server), or PHP Mail (uses server\'s mail function).')" onmouseout='hideToolTip()'>(?)</a></td>
+			<td class='main'><select id='smtp_mode' class='textBox'><option value='auto'<?php echo ($websiteInfo['smtp_mode'] == 'auto' || !isset($websiteInfo['smtp_mode']) ? ' selected' : ''); ?>>Auto</option><option value='smtp'<?php echo ($websiteInfo['smtp_mode'] == 'smtp' ? ' selected' : ''); ?>>SMTP</option><option value='mail'<?php echo ($websiteInfo['smtp_mode'] == 'mail' ? ' selected' : ''); ?>>PHP Mail</option></select></td>
+		</tr>
+		<tr>
+			<td class='formLabel'>SMTP Host:</td>
+			<td class='main'><input type='text' id='smtp_host' value='<?php echo $websiteInfo['smtp_host']; ?>' class='textBox' style='width: 250px'></td>
+		</tr>
+		<tr>
+			<td class='formLabel'>SMTP Port:</td>
+			<td class='main'><input type='text' id='smtp_port' value='<?php echo $websiteInfo['smtp_port']; ?>' class='textBox' style='width: 50px'></td>
+		</tr>
+		<tr>
+			<td class='formLabel'>SMTP Username:</td>
+			<td class='main'><input type='text' id='smtp_username' value='<?php echo $websiteInfo['smtp_username']; ?>' class='textBox' style='width: 250px'></td>
+		</tr>
+		<tr>
+			<td class='formLabel'>SMTP Password:</td>
+			<td class='main'><input type='password' id='smtp_password' value='<?php echo $websiteInfo['smtp_password']; ?>' class='textBox' style='width: 250px'></td>
+		</tr>
+		<tr>
 			<td class='formLabel' style='width: 200px'>Max Diplomacy Requests: <a href='javascript:void(0)' onmouseover="showToolTip('Sets the number of times someone can send a diplomacy request.')" onmouseout='hideToolTip()'>(?)</a></td>
 			<td class='main'><input type='text' id='maxdiplomacy' value='<?php echo $websiteInfo['maxdiplomacy']; ?>' class='textBox' style='width: 30px'></td>
 		</tr>
@@ -501,7 +521,7 @@ foreach ([10,25,50,100] as $value) {
 
 			$('#loadingspiral').show();
 
-			$.post("<?php echo $MAIN_ROOT; ?>members/include/admin/sitesettings_submit.php", { clanName: $('#clanname').val(), clanTag: $('#clantag').val(), logoURL: $('#logourl').val(), forumURL: $('#forumurl').val(), themeName: $('#theme').val(), maxDiplomacy: $('#maxdiplomacy').val(), failedLogins: $('#failedlogins').val(), maxDSL: $('#maxdsl').val(), lowDSL: $('#lowdsl').val(), medDSL: $('#meddsl').val(), highDSL: $('#highdsl').val(), medalOrder: $('#medalorder').val(), debugMode: $('#debugmode').val(), hideInactive: $('#showinactive').val(), showHPNews: $('#showNewsPosts').val(), numOfNewsPosts: $('#numOfNewsPosts').val(), customNewsAmount: $('#customNewsAmount').val(), newsPostsPerPage: $('#newsPostsPerPage').val(), emailqueue_delay: $('#emailqueue_delay').val() }, function(data) {
+			$.post("<?php echo $MAIN_ROOT; ?>members/include/admin/sitesettings_submit.php", { clanName: $('#clanname').val(), clanTag: $('#clantag').val(), logoURL: $('#logourl').val(), forumURL: $('#forumurl').val(), themeName: $('#theme').val(), maxDiplomacy: $('#maxdiplomacy').val(), failedLogins: $('#failedlogins').val(), maxDSL: $('#maxdsl').val(), lowDSL: $('#lowdsl').val(), medDSL: $('#meddsl').val(), highDSL: $('#highdsl').val(), medalOrder: $('#medalorder').val(), debugMode: $('#debugmode').val(), hideInactive: $('#showinactive').val(), showHPNews: $('#showNewsPosts').val(), numOfNewsPosts: $('#numOfNewsPosts').val(), customNewsAmount: $('#customNewsAmount').val(), newsPostsPerPage: $('#newsPostsPerPage').val(), emailqueue_delay: $('#emailqueue_delay').val(), smtp_mode: $('#smtp_mode').val(), smtp_host: $('#smtp_host').val(), smtp_port: $('#smtp_port').val(), smtp_username: $('#smtp_username').val(), smtp_password: $('#smtp_password').val() }, function(data) {
 				$('#postResponse').html(data);
 				$('#loadingspiral').hide();
 			});
