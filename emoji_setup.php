@@ -1,6 +1,6 @@
 <?php
 /*
- * BlueThrust Emoji Support Setup
+ * BlueThrust v5.8 Emoji Support Setup
  * Enables emoji support for existing installations
  *
  * REQUIREMENTS:
@@ -54,7 +54,7 @@ if (!defined('MAIN_ROOT')) {
 	}
 }
 
-$pageTitle = 'BlueThrust Emoji Support Setup';
+$pageTitle = 'BlueThrust v5.8 Emoji Support Setup';
 $message = '';
 $success = false;
 $step = isset($_GET['step']) ? $_GET['step'] : 'check';
@@ -312,7 +312,7 @@ try {
 		<?php endif; ?>
 
 		<div style="margin-top: 40px; font-size: 0.9em; color: #666;">
-			<p>BlueThrust Emoji Support Setup v1.0</p>
+			<p>BlueThrust v5.8 Emoji Support Setup</p>
 		</div>
 	</div>
 </body>
