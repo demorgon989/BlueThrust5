@@ -3,7 +3,7 @@
 /.vscode/
 /node_modules/
 /src/_config.php
-/src/themes/bluegrid/
+/src/themes/
 /vendor/
 /src/downloads/
 /src/installer/_installrunning.txt
