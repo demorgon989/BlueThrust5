@@ -10,9 +10,48 @@
  * This file should be deleted after successful setup
  */
 
+// Include BlueThrust setup files to define MAIN_ROOT and other constants
+require_once('_setup.php');
+
 // Prevent direct access without proper setup
 if (!defined('MAIN_ROOT')) {
-	die('This file must be placed in the BlueThrust root directory');
+	$current_dir = getcwd();
+	$missing_files = [];
+
+	// Check for essential BlueThrust files
+	$required_files = ['_setup.php', '_config.php', 'classes/btmysql.php'];
+	$required_dirs = ['classes', 'js', 'src'];
+
+	foreach ($required_files as $file) {
+		if (!file_exists($file)) {
+			$missing_files[] = $file;
+		}
+	}
+
+	foreach ($required_dirs as $dir) {
+		if (!is_dir($dir)) {
+			$missing_files[] = $dir . '/ (directory)';
+		}
+	}
+
+	if (!empty($missing_files)) {
+		echo '<h2>BlueThrust Root Directory Not Detected</h2>';
+		echo '<p>This tool must be placed in your BlueThrust root directory.</p>';
+		echo '<p><strong>Current directory:</strong> ' . $current_dir . '</p>';
+		echo '<p><strong>Missing files/directories:</strong></p>';
+		echo '<ul>';
+		foreach ($missing_files as $missing) {
+			echo '<li>' . htmlspecialchars($missing) . '</li>';
+		}
+		echo '</ul>';
+		echo '<p>Please ensure this file is in the same directory as your main BlueThrust files (index.php, _setup.php, etc.).</p>';
+		exit;
+	} else {
+		echo '<h2>Setup Error</h2>';
+		echo '<p>BlueThrust setup files found but MAIN_ROOT constant not defined. This may indicate a configuration issue.</p>';
+		echo '<p>Please check your _setup.php and _config.php files.</p>';
+		exit;
+	}
 }
 
 $pageTitle = 'BlueThrust Emoji Support Setup';
@@ -21,8 +60,7 @@ $success = false;
 $step = isset($_GET['step']) ? $_GET['step'] : 'check';
 
 try {
-	// Include database configuration
-	require_once('include/config.php');
+	// Database connection is already established by _setup.php
 	require_once('classes/btmysql.php');
 
 	$mysqli = new btmysql($dbhost, $dbuser, $dbpass, $dbname);
