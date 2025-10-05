@@ -932,6 +932,7 @@ class Form {
 					script_url: '".addslashes(MAIN_ROOT)."js/tiny_mce/tinymce.min.js',
 					skin: '".addslashes($skin)."',
 					content_css: '".addslashes($editorCSS)."',
+					plugins: 'emoticons',
 					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,alignleft,aligncenter,alignright,|,bullist,numlist,|,link,unlink,image,emoticons,|,quotebbcode,codebbcode".$addHTML.",',
 					theme_advanced_buttons2: 'forecolor,fontselect,fontsizeselect',
 					theme_advanced_resizing: true

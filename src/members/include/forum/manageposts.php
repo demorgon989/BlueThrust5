@@ -283,8 +283,8 @@ if (
 			
 					script_url: '".$MAIN_ROOT."js/tiny_mce/tiny_mce.js',
 					theme: 'advanced',
-					plugins: 'autolink,emotions',
-					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,emotions,|,quotebbcode,codebbcode,',
+					plugins: 'autolink,emoticons',
+					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,emoticons,|,quotebbcode,codebbcode,',
 					theme_advanced_buttons2: 'forecolorpicker,fontselect,fontsizeselect',
 					theme_advanced_resizing: true,
 					content_css: '".$MAIN_ROOT."themes/btcs4.css.php',
