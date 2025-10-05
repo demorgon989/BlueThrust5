@@ -928,18 +928,18 @@ class Form {
 
 		$GLOBALS['richtextEditor'] = "
 			$(document).ready(function() {
-				$('#".$componentID."').tinymce({
-					skin: '".addslashes($skin)."',
-					content_css: '".addslashes($editorCSS)."',
-					plugins: 'emoticons',
-					toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink image emoticons | quotebbcode codebbcode".$addHTML."',
-					menubar: false,
-					statusbar: false,
-					resize: true,
-					setup: function(ed) {
-						// Custom setup if needed
-					}
-				});
+				if (typeof tinymce !== 'undefined') {
+					tinymce.init({
+						selector: '#".$componentID."',
+						skin: '".addslashes($skin)."',
+						content_css: '".addslashes($editorCSS)."',
+						plugins: 'emoticons',
+						toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink image emoticons | quotebbcode codebbcode".$addHTML."',
+						menubar: false,
+						statusbar: false,
+						resize: true
+					});
+				}
 			});
 		";
 
