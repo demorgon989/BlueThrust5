@@ -44,7 +44,7 @@ $x = 0;
 foreach ($pluginsDir as $dir) {
 	// List of deprecated plugins
 	$deprecatedPlugins = ['twitter', 'facebook', 'twitch'];
-	
+
 	if (is_dir($prevFolder."plugins/".$dir) && $dir != "." && $dir != ".." && !in_array($dir, $pluginObj->getPlugins("filepath")) && (file_exists($prevFolder."plugins/".$dir."/install.php") || file_exists($prevFolder."plugins/".$dir."/install_setup.php"))) {
 		if ($x == 0) {
 			$x = 1;
@@ -85,7 +85,7 @@ foreach ($pluginsDir as $dir) {
 
 if ($dispPlugins != "") {
 	echo $dispPlugins;
-	
+
 	// Show note about deprecated plugins
 	echo "
 		<tr>

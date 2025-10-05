@@ -918,11 +918,11 @@ class Form {
 		global $MAIN_ROOT, $THEME, $hooksObj;
 
 		$addHTML = ($allowHTML) ? ",code" : "";
-		
+
 		// Auto-detect dark themes and generate appropriate CSS
 		$isDarkTheme = in_array($THEME, ['ghost', 'battlecity']) || $this->isDarkTheme();
 		$editorCSS = $isDarkTheme ? $this->generateDarkModeCSS() : MAIN_ROOT."themes/".$THEME."/btcs4.css";
-		
+
 		// Set skin based on theme
 		$skin = $isDarkTheme ? 'oxide-dark' : 'oxide';
 
@@ -938,7 +938,7 @@ class Form {
 				});
 			});
 		";
-		
+
 		$GLOBALS['rtCompID'] = $componentID;
 		$hooksObj->run("form_richtexteditor");
 		unset($GLOBALS['rtCompID']);
@@ -988,7 +988,7 @@ class Form {
 	 */
 	private function isDarkTheme() {
 		global $THEME, $MAIN_ROOT;
-		
+
 		// Try to detect dark theme by looking at CSS variables if available
 		$cssFile = MAIN_ROOT."themes/".$THEME."/css.php";
 		if (file_exists($cssFile)) {
@@ -999,7 +999,7 @@ class Form {
 				return in_array(strtolower($arrCSSInfo['font-color']), $lightColors);
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -1008,18 +1008,18 @@ class Form {
 	 */
 	private function generateDarkModeCSS() {
 		global $THEME, $MAIN_ROOT;
-		
+
 		// Get theme colors if available
 		$cssFile = MAIN_ROOT."themes/".$THEME."/css.php";
 		$fontColor = 'white';
 		$linkColor = 'silver';
 		$linkHoverColor = '#647d99';
-		
+
 		if (file_exists($cssFile)) {
 			include($cssFile);
 			if (isset($arrCSSInfo)) {
 				$fontColor = $arrCSSInfo['font-color'] ?? 'white';
-				$linkColor = $arrCSSInfo['link-color'] ?? 'silver';  
+				$linkColor = $arrCSSInfo['link-color'] ?? 'silver';
 				$linkHoverColor = $arrCSSInfo['link-hover-color'] ?? '#647d99';
 			}
 		}
@@ -1089,38 +1089,42 @@ hr { border-color: #555; }
 		}
 
 		// Add !important to ensure styles override TinyMCE defaults
-		$darkCSS = str_replace(['{$fontColor}', '{$linkColor}', '{$linkHoverColor}'], 
-								[$fontColor.' !important', $linkColor.' !important', $linkHoverColor.' !important'], 
-								$darkCSS);
-		$darkCSS = str_replace(['background-color: #2d2d2d', 'background-color: #1a1a1a'], 
-								['background-color: #2d2d2d !important', 'background-color: #1a1a1a !important'], 
-								$darkCSS);
-		
-		// Create temporary CSS file in js directory (writable, not theme-specific)  
+		$darkCSS = str_replace(
+			['{$fontColor}', '{$linkColor}', '{$linkHoverColor}'],
+			[$fontColor.' !important', $linkColor.' !important', $linkHoverColor.' !important'],
+			$darkCSS
+		);
+		$darkCSS = str_replace(
+			['background-color: #2d2d2d', 'background-color: #1a1a1a'],
+			['background-color: #2d2d2d !important', 'background-color: #1a1a1a !important'],
+			$darkCSS
+		);
+
+		// Create temporary CSS file in js directory (writable, not theme-specific)
 		$darkCSSFileName = "tinymce-dark-".md5($THEME).".css";
-		
+
 		// Determine correct path by working backwards from this file's location
 		// This file is in classes/, so parent directory contains js/
 		$classesDir = dirname(__FILE__);
 		$baseDir = dirname($classesDir);
 		$darkCSSPath = $baseDir."/js/".$darkCSSFileName;
 		$darkCSSURL = MAIN_ROOT."js/".$darkCSSFileName;
-		
+
 		// Ensure js directory exists and is writable
 		$jsDir = $baseDir."/js/";
 		if (!is_dir($jsDir)) {
 			mkdir($jsDir, 0755, true);
 		}
-		
+
 		// Check if we can write to js directory, fallback to temp directory if not
 		if (!is_writable($jsDir)) {
 			$darkCSSPath = sys_get_temp_dir()."/bt-".$darkCSSFileName;
 			// For temp files, we'll use data URI instead since they won't be web-accessible
 			return 'data:text/css;charset=utf-8,' . urlencode($darkCSS);
 		}
-		
+
 		file_put_contents($darkCSSPath, $darkCSS);
-		
+
 		return $darkCSSURL;
 	}
 }

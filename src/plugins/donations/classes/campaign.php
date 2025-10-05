@@ -12,7 +12,7 @@ class DonationCampaign extends Basic {
 	public $donationInfo;
 	public $donationAmounts;
 	private $arrDonatorList;
-	
+
 	private function logDebug($message) {
 		$logFile = BASE_DIRECTORY."plugins/donations/debug.log";
 		$timestamp = date("Y-m-d H:i:s");
@@ -21,7 +21,7 @@ class DonationCampaign extends Basic {
 			donation_debug_output($message);
 		}
 	}
-	
+
 	public function __construct($sqlConnection) {
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix()."donations_campaign";
@@ -29,17 +29,17 @@ class DonationCampaign extends Basic {
 		$this->donationObj = new Donation($sqlConnection);
 		$this->arrPeriodDateCodes = ["days" => self::DAY, "weeks" => self::WEEK, "months" => self::MONTH, "years" => self::YEAR];
 	}
-	
+
 	public function select($intIDNum, $numericIDOnly = true) {
 		$returnVal = parent::select($intIDNum, $numericIDOnly);
 		$this->populateDonationInfo();
 		return $returnVal;
 	}
-	
+
 	public function getLink() {
 		return MAIN_ROOT."plugins/donations/?campaign_id=".$this->intTableKeyValue;
 	}
-	
+
 	public function getCurrentPeriodRange($returnTimestamps = false) {
 		$returnVal = [];
 		if ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
@@ -78,7 +78,7 @@ class DonationCampaign extends Basic {
 		}
 		return $returnVal;
 	}
-	
+
 	public function updateCurrentPeriod() {
 		if ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
 			$recurUnit = $this->arrObjInfo['recurringunit'];
@@ -94,7 +94,7 @@ class DonationCampaign extends Basic {
 			}
 		}
 	}
-	
+
 	public function calcPeriodsSinceStart() {
 		$returnVal = 0;
 		if ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
@@ -107,7 +107,7 @@ class DonationCampaign extends Basic {
 		}
 		return $returnVal;
 	}
-	
+
 	public function populateDonationInfo($total = false, $currentPeriod = 0, $nextPeriod = 0) {
 		$donationInfo = [];
 		if ($this->intTableKeyValue != "") {
@@ -150,11 +150,11 @@ class DonationCampaign extends Basic {
 		}
 		$this->donationInfo = $donationInfo;
 	}
-	
+
 	public function getTotalDonationAmount() {
 		return $this->donationAmounts;
 	}
-	
+
 	public function getDonationInfo() {
 		return $this->donationInfo;
 	}
@@ -296,7 +296,7 @@ class DonationCampaign extends Basic {
 		$arrSymbols = $this->getCurrencySymbol();
 		return $arrSymbols['left'].number_format($amount, 2).$arrSymbols['right'];
 	}
-	
+
 	public function getCurrencySymbol() {
 		$returnVal = [];
 		if ($this->intTableKeyValue != "") {
@@ -356,14 +356,14 @@ class DonationCampaign extends Basic {
 		}
 		return $returnVal;
 	}
-	
+
 	public function __get($name) {
 		$arrConstants = ["DAY", "WEEK", "MONTH", "YEAR"];
 		if (in_array($name, $arrConstants)) {
 			return constant("self::$name");
 		}
 	}
-	
+
 	public static function getCurrencyCodes() {
 		$currencyCodes = [];
 		if (@include(BASE_DIRECTORY."plugins/donations/include/currency_codes.php")) {
@@ -371,7 +371,7 @@ class DonationCampaign extends Basic {
 		}
 		return $currencyCodes;
 	}
-	
+
 	public static function getCurrencyCodeInfo() {
 		$currencyInfo = [];
 		if (@include(BASE_DIRECTORY."plugins/donations/include/currency_codes.php")) {

@@ -38,7 +38,7 @@ class btMail {
 			$mail->Password = $password;
 
 			if (!empty($port)) {
-				$mail->Port = (int)$port;
+				$mail->Port = (int) $port;
 			}
 
 			if (!empty($encryption)) {

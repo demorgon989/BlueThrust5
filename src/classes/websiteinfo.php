@@ -33,7 +33,7 @@ class WebsiteInfo extends Basic {
 				$this->arrKeys[$row['name']] = $row['websiteinfo_id'];
 			}
 			$this->blnRefreshInfo = false;
-			
+
 			// Update btMail with SMTP settings
 			$this->updateBTMailSettings();
 		} else {
@@ -54,7 +54,7 @@ class WebsiteInfo extends Basic {
 			'smtp_password' => $this->arrObjInfo['smtp_password'] ?? '',
 			'smtp_encryption' => $this->arrObjInfo['smtp_encryption'] ?? ''
 		];
-		
+
 		// Create new btMail instance with updated settings
 		$this->objBTMail = new btMail($smtpSettings);
 	}

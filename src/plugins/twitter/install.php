@@ -52,7 +52,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	if (ob_get_level()) {
 		ob_clean();
 	}
-	
+
 	$countErrors = 1;
 	$dispError = [];
 
