@@ -58,7 +58,7 @@ function BTCS4Loader($class_name) {
 spl_autoload_register("BTCS4Loader", true, true);
 require_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
 
-define("FULL_SITE_URL", getHTTP().$_SERVER['SERVER_NAME'].MAIN_ROOT);
+define("FULL_SITE_URL", getHTTP().$_SERVER['HTTP_HOST'].MAIN_ROOT);
 
 
 $mysqli = new btmysql($dbhost, $dbuser, $dbpass, $dbname);
