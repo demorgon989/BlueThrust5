@@ -4,12 +4,24 @@
 
 **New!** Want to get BlueThrust5 running quickly with Docker? Check out our comprehensive [Docker Installation Guide](DOCKER_INSTALL.md) for step-by-step instructions!
 
+## Updating to Emoji Support (Existing Installations)
+
+**New!** If you have an existing BlueThrust installation and want to enable emoji support in forum posts, run the emoji setup tool:
+
+1. Download the latest version from the [Version 5.8](https://github.com/demorgon989/BlueThrust5/archive/refs/heads/master.zip) link below
+2. Extract and upload the `emoji_setup.php` file to your BlueThrust installation root directory
+3. Navigate to `https://yourdomain.com/emoji_setup.php` in your browser
+4. Follow the on-screen instructions to migrate your database and enable emoji support
+
+The tool will automatically check your database charset, migrate tables to UTF8MB4 for full Unicode support, and test emoji functionality.
+
 ## Download Link
 
-We have two versions of BlueThrust available:
+We have three versions of BlueThrust available:
 
 * [Version 4](https://github.com/RedDragonWebDesign/BlueThrust5/releases/tag/v4r17) - The original BlueThrust clan scripts from 2016. Great if you are running a really old version of PHP such as PHP 5.6.
 * [Version 5](https://github.com/RedDragonWebDesign/BlueThrust5/archive/refs/heads/master.zip) - The latest and greatest BlueThrust clan scripts that we have done some bug fixes and PHP error fixes on. Great if you are running a modern version of PHP such as PHP 8.1. This is a WORK IN PROGRESS and may still have some errors.
+* [Version 5.8](https://github.com/demorgon989/BlueThrust5/archive/refs/heads/master.zip) - **RECOMMENDED** - Enhanced BlueThrust with emoji support, TinyMCE v8 upgrade, Docker support, and critical bug fixes. Includes the emoji setup tool for existing installations. Production-ready with modern PHP 8.1+ support.
 
 ## Bugs, Security Issues, Feature Requests
 
