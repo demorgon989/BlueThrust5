@@ -936,7 +936,7 @@ class Form {
 							skin: '".addslashes($skin)."',
 							content_css: '".addslashes($editorCSS)."',
 							plugins: 'emoticons',
-							toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink emoticons | quotebbcode codebbcode".$addHTML."',
+							toolbar: 'bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist | link unlink emoticons | quotebbcode codebbcode".$addHTML."',
 							menubar: false,
 							statusbar: false,
 							resize: true
