@@ -175,25 +175,49 @@ foreach ([10,25,50,100] as $value) {
 			<td class='formLabel' style='width: 200px'>E-mail Queue Delay: <a href='javascript:void(0)' onmouseover="showToolTip('Sets how frequently to check the e-mail queue to send e-mail notifications.  Minimum is 5 minutes, the default is 30 minutes.')" onmouseout='hideToolTip()'>(?)</a></td>
 			<td class='main'><input type='text' id='emailqueue_delay' value='<?php echo $websiteInfo['emailqueue_delay']; ?>' class='textBox' style='width: 30px'> minutes</td>
 		</tr>
+		</table>
+		<table class='formTable' style='margin-top: 0px'>
 		<tr>
-			<td class='formLabel'>SMTP Mode: <a href='javascript:void(0)' onmouseover="showToolTip('Choose how emails are sent: Auto (tries SMTP then falls back to PHP mail), SMTP (uses SMTP server), or PHP Mail (uses server\'s mail function).')" onmouseout='hideToolTip()'>(?)</a></td>
-			<td class='main'><select id='smtp_mode' class='textBox'><option value='auto'<?php echo ($websiteInfo['smtp_mode'] == 'auto' || !isset($websiteInfo['smtp_mode']) ? ' selected' : ''); ?>>Auto</option><option value='smtp'<?php echo ($websiteInfo['smtp_mode'] == 'smtp' ? ' selected' : ''); ?>>SMTP</option><option value='mail'<?php echo ($websiteInfo['smtp_mode'] == 'mail' ? ' selected' : ''); ?>>PHP Mail</option></select></td>
+			<td colspan='2' class='main'>
+				<b>SMTP Email Settings</b>
+				<div class='dottedLine' style='width: 90%; padding-top: 3px; margin-bottom: 5px'></div>
+				<div style='padding-left: 3px; padding-bottom: 15px'>
+					Configure SMTP settings for improved email deliverability. Leave fields empty to use PHP's default mail() function.
+				</div>
+			</td>
 		</tr>
 		<tr>
-			<td class='formLabel'>SMTP Host:</td>
-			<td class='main'><input type='text' id='smtp_host' value='<?php echo $websiteInfo['smtp_host']; ?>' class='textBox' style='width: 250px'></td>
+			<td class='formLabel'>SMTP Mode: <a href='javascript:void(0)' onmouseover="showToolTip('Choose how to send emails: Auto (use SMTP if configured, otherwise mail), SMTP Only (force SMTP), or Mail Only (force PHP mail).')" onmouseout='hideToolTip()'>(?)</a></td>
+			<td class='main'>
+				<select id='smtp_mode' class='textBox'>
+					<option value='auto' <?php echo ($websiteInfo['smtp_mode'] == 'auto' || !isset($websiteInfo['smtp_mode'])) ? 'selected' : ''; ?>>Auto (SMTP if configured, otherwise mail)</option>
+					<option value='smtp' <?php echo ($websiteInfo['smtp_mode'] == 'smtp') ? 'selected' : ''; ?>>SMTP Only</option>
+					<option value='mail' <?php echo ($websiteInfo['smtp_mode'] == 'mail') ? 'selected' : ''; ?>>Mail Only</option>
+				</select>
+			</td>
 		</tr>
 		<tr>
-			<td class='formLabel'>SMTP Port:</td>
-			<td class='main'><input type='text' id='smtp_port' value='<?php echo $websiteInfo['smtp_port']; ?>' class='textBox' style='width: 50px'></td>
+			<td class='formLabel'>SMTP Host: <a href='javascript:void(0)' onmouseover="showToolTip('SMTP server hostname (e.g., smtp.gmail.com, smtp.mailgun.org)')" onmouseout='hideToolTip()'>(?)</a></td>
+			<td class='main'><input type='text' id='smtp_host' value='<?php echo htmlspecialchars($websiteInfo['smtp_host'] ?? ''); ?>' class='textBox' style='width: 250px' placeholder='smtp.gmail.com'></td>
 		</tr>
 		<tr>
-			<td class='formLabel'>SMTP Username:</td>
-			<td class='main'><input type='text' id='smtp_username' value='<?php echo $websiteInfo['smtp_username']; ?>' class='textBox' style='width: 250px'></td>
+			<td class='formLabel'>SMTP Port: <a href='javascript:void(0)' onmouseover="showToolTip('SMTP server port (587 for TLS, 465 for SSL, 25 for unencrypted)')" onmouseout='hideToolTip()'>(?)</a></td>
+			<td class='main'>
+				<select id='smtp_port' class='textBox'>
+					<option value='587' <?php echo (($websiteInfo['smtp_port'] ?? '') == '587') ? 'selected' : ''; ?>>587 (TLS)</option>
+					<option value='465' <?php echo (($websiteInfo['smtp_port'] ?? '') == '465') ? 'selected' : ''; ?>>465 (SSL)</option>
+					<option value='25' <?php echo (($websiteInfo['smtp_port'] ?? '') == '25') ? 'selected' : ''; ?>>25 (Unencrypted)</option>
+					<option value='2525' <?php echo (($websiteInfo['smtp_port'] ?? '') == '2525') ? 'selected' : ''; ?>>2525 (Alternative)</option>
+				</select>
+			</td>
 		</tr>
 		<tr>
-			<td class='formLabel'>SMTP Password:</td>
-			<td class='main'><input type='password' id='smtp_password' value='<?php echo $websiteInfo['smtp_password']; ?>' class='textBox' style='width: 250px'></td>
+			<td class='formLabel'>SMTP Username: <a href='javascript:void(0)' onmouseover="showToolTip('Your SMTP account username/email address')" onmouseout='hideToolTip()'>(?)</a></td>
+			<td class='main'><input type='text' id='smtp_username' value='<?php echo htmlspecialchars($websiteInfo['smtp_username'] ?? ''); ?>' class='textBox' style='width: 250px' placeholder='your-email@gmail.com'></td>
+		</tr>
+		<tr>
+			<td class='formLabel'>SMTP Password: <a href='javascript:void(0)' onmouseover="showToolTip('Your SMTP account password or app password')" onmouseout='hideToolTip()'>(?)</a></td>
+			<td class='main'><input type='password' id='smtp_password' value='<?php echo htmlspecialchars($websiteInfo['smtp_password'] ?? ''); ?>' class='textBox' style='width: 250px' placeholder='App password for Gmail'></td>
 		</tr>
 		<tr>
 			<td class='formLabel' style='width: 200px'>Max Diplomacy Requests: <a href='javascript:void(0)' onmouseover="showToolTip('Sets the number of times someone can send a diplomacy request.')" onmouseout='hideToolTip()'>(?)</a></td>
