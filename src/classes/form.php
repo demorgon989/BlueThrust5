@@ -62,7 +62,7 @@ class Form {
 	public function __construct($args = []) {
 
 		$this->buildForm($args);
-		$this->richtextboxJSFile = "<script type='text/javascript' src='".MAIN_ROOT."js/tiny_mce/jquery.tinymce.js'></script>";
+		$this->richtextboxJSFile = "<script type='text/javascript' src='".MAIN_ROOT."js/tiny_mce/tinymce.min.js'></script><script type='text/javascript' src='".MAIN_ROOT."js/tiny_mce/jquery.tinymce.js'></script>";
 		$this->colorpickerJSFile = "<script type='text/javascript' src='".MAIN_ROOT."js/colorpicker/jquery.miniColors.js'></script><link rel='stylesheet' media='screen' type='text/css' href='".MAIN_ROOT."js/colorpicker/jquery.miniColors.css'>";
 	}
 
@@ -928,18 +928,20 @@ class Form {
 
 		$GLOBALS['richtextEditor'] = "
 			$(document).ready(function() {
-				if (typeof tinymce !== 'undefined') {
-					tinymce.init({
-						selector: '#".$componentID."',
-						skin: '".addslashes($skin)."',
-						content_css: '".addslashes($editorCSS)."',
-						plugins: 'emoticons',
-						toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink image emoticons | quotebbcode codebbcode".$addHTML."',
-						menubar: false,
-						statusbar: false,
-						resize: true
-					});
-				}
+				setTimeout(function() {
+					if (typeof tinymce !== 'undefined' && !tinymce.get('".$componentID."')) {
+						tinymce.init({
+							selector: '#".$componentID."',
+							skin: '".addslashes($skin)."',
+							content_css: '".addslashes($editorCSS)."',
+							plugins: 'emoticons',
+							toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink emoticons | quotebbcode codebbcode".$addHTML."',
+							menubar: false,
+							statusbar: false,
+							resize: true
+						});
+					}
+				}, 100);
 			});
 		";
 
@@ -1120,10 +1122,9 @@ hr { border-color: #555; }
 			mkdir($jsDir, 0755, true);
 		}
 
-		// Check if we can write to js directory, fallback to temp directory if not
+		// Check if we can write to js directory
 		if (!is_writable($jsDir)) {
-			$darkCSSPath = sys_get_temp_dir()."/bt-".$darkCSSFileName;
-			// For temp files, we'll use data URI instead since they won't be web-accessible
+			// Directory not writable, use data URI instead
 			return 'data:text/css;charset=utf-8,' . urlencode($darkCSS);
 		}
 

@@ -122,13 +122,13 @@ if ( empty($_POST['submit']) ) {
 		<script type='text/javascript'>
 
 			$('document').ready(function() {
-				$('#tinymceTextArea').tinymce({
-			
-					script_url: '".$MAIN_ROOT."js/tiny_mce/tiny_mce.js',
-					theme: 'advanced',
-					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,code,|,forecolorpicker,fontselect,fontsizeselect',
-					theme_advanced_resizing: true
-				
+				tinymce.init({
+					selector: '#tinymceTextArea',
+					plugins: 'autolink,link,image,code,lists,textcolor,colorpicker',
+					toolbar: 'bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist | link unlink image code | forecolor fontselect fontsizeselect',
+					menubar: false,
+					statusbar: false,
+					resize: true
 				});
 			
 			});

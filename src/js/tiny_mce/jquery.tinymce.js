@@ -66,7 +66,7 @@
                     skin: skinName,
                     skin_url: baseUrl + '/skins/ui/' + skinName,
                     content_css: isDark ? 'dark' : 'default',
-                    plugins: '',  // Start with no plugins to test basic buttons
+                    plugins: options.plugins || '',  // Use specified plugins or empty
                     toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright',
                     toolbar_mode: 'wrap',
                     toolbar_sticky: false,
@@ -86,11 +86,18 @@
 
                 // Map old options to new ones
                 if (options.content_css) {
-                    // Keep the old content_css for compatibility
-                    modernOptions.content_css = options.content_css;
+                    // Check if content_css is a data URI
+                    if (options.content_css.startsWith('data:text/css;charset=utf-8,')) {
+                        // Extract CSS from data URI and add to content_style
+                        var cssContent = decodeURIComponent(options.content_css.substring('data:text/css;charset=utf-8,'.length));
+                        modernOptions.content_style = (modernOptions.content_style ? modernOptions.content_style + ' ' : '') + cssContent;
+                    } else {
+                        // Keep the old content_css for compatibility (regular URLs)
+                        modernOptions.content_css = options.content_css;
+                    }
                     
-                    // Add custom dark mode styling for content area
-                    if (isDark) {
+                    // Add custom dark mode styling for content area if not already handled
+                    if (isDark && !options.content_css.startsWith('data:text/css;charset=utf-8,')) {
                         modernOptions.content_style = 'body { background-color: #1a1a1a; color: #e0e0e0; }';
                     }
                 }

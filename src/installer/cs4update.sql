@@ -392,12 +392,12 @@ CREATE TABLE IF NOT EXISTS `forum_post` (
   `forumtopic_id` int(11) NOT NULL,
   `member_id` int(11) NOT NULL,
   `dateposted` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `message` mediumtext COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastedit_date` int(11) NOT NULL,
   `lastedit_member_id` int(11) NOT NULL,
   PRIMARY KEY (`forumpost_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_rankaccess` (
   `forumrankaccess_id` int(11) NOT NULL AUTO_INCREMENT,

@@ -279,14 +279,26 @@ if (
 			$('#consoleTopBackButton').attr('href', '".$MAIN_ROOT."forum/viewtopic.php?tID=".$postInfo['forumtopic_id']."');
 			$('#consoleBottomBackButton').attr('href', '".$MAIN_ROOT."forum/viewtopic.php?tID=".$postInfo['forumtopic_id']."');
 			
+			// Load TinyMCE if not already loaded
+			if (typeof tinymce === 'undefined') {
+				var script = document.createElement('script');
+				script.src = '".$MAIN_ROOT."js/tiny_mce/tinymce.min.js';
+				script.onload = function() {
+					initTinyMCE();
+				};
+				document.head.appendChild(script);
+			} else {
+				initTinyMCE();
+			}
+			
+			function initTinyMCE() {
 				tinymce.init({
 					selector: '#tinymceTextArea',
-					plugins: 'autolink,emoticons,link,image,code,lists',
-					toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink image emoticons | quotebbcode codebbcode',
+					plugins: 'autolink,emoticons,link,code,lists',
+					toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink emoticons | quotebbcode codebbcode',
 					menubar: false,
 					statusbar: false,
 					resize: true,
-					content_css: '".$MAIN_ROOT."themes/btcs4.css.php',
 					setup: function(ed) {
 						ed.addButton('quotebbcode', {
 							
@@ -314,6 +326,7 @@ if (
 						});
 					}
 				});
+			}
 			
 				
 				$('#btnPreview').click(function() {

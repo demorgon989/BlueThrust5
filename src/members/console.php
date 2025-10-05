@@ -60,12 +60,12 @@ if (isset($_GET['cID']) && $consoleInfo['pagetitle'] === '-separator-') {
 	exit;
 }
 
-$arrTinyMCEPages = ["Manage News", "Post News", "Add Custom Page", "Manage Custom Pages", "Add Custom Form Page", "Manage Custom Form Pages", "Post Topic", "Manage Forum Posts", "Add Menu Item", "Add Menu Category", "Manage Menu Categories", "Manage Menu Items", "Edit Profile"];
+$arrTinyMCEPages = ["Manage News", "Post News", "Add Custom Page", "Manage Custom Pages", "Add Custom Form Page", "Manage Custom Form Pages", "Post Topic", "Add Menu Item", "Add Menu Category", "Manage Menu Categories", "Manage Menu Items", "Edit Profile"];
 $arrAceEditorPages = ["Modify Current Theme", "Add Menu Category", "Add Menu Item", "Manage Menu Categories", "Manage Menu Items"];
 
 
 if (in_array($consoleInfo['pagetitle'], $arrTinyMCEPages)) {
-	$btThemeObj->addHeadItem("richtexteditor", "<script type='text/javascript' src='".$MAIN_ROOT."js/tiny_mce/jquery.tinymce.js'></script>");
+	$btThemeObj->addHeadItem("richtexteditor", "<script type='text/javascript' src='".$MAIN_ROOT."js/tiny_mce/tinymce.min.js'></script><script type='text/javascript' src='".$MAIN_ROOT."js/tiny_mce/jquery.tinymce.js'></script>");
 	$btThemeObj->addHeadItem("richtexteditor1", "<script type='text/javascript' src='".$MAIN_ROOT."js/ckeditor/ckeditor.js'></script>");
 }
 
