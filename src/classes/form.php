@@ -932,6 +932,7 @@ class Form {
 					if (typeof tinymce !== 'undefined' && !tinymce.get('".$componentID."')) {
 						tinymce.init({
 							selector: '#".$componentID."',
+							license_key: 'gpl',
 							skin: '".addslashes($skin)."',
 							content_css: '".addslashes($editorCSS)."',
 							plugins: 'emoticons',
