@@ -279,20 +279,14 @@ if (
 			$('#consoleTopBackButton').attr('href', '".$MAIN_ROOT."forum/viewtopic.php?tID=".$postInfo['forumtopic_id']."');
 			$('#consoleBottomBackButton').attr('href', '".$MAIN_ROOT."forum/viewtopic.php?tID=".$postInfo['forumtopic_id']."');
 			
-				$('#tinymceTextArea').tinymce({
-			
-					script_url: '".$MAIN_ROOT."js/tiny_mce/tiny_mce.js',
-					theme: 'advanced',
-					plugins: 'autolink,emoticons',
-					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,emoticons,|,quotebbcode,codebbcode,',
-					theme_advanced_buttons2: 'forecolorpicker,fontselect,fontsizeselect',
-					theme_advanced_resizing: true,
+				tinymce.init({
+					selector: '#tinymceTextArea',
+					plugins: 'autolink,emoticons,link,image,code,lists',
+					toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink image emoticons | quotebbcode codebbcode',
+					menubar: false,
+					statusbar: false,
+					resize: true,
 					content_css: '".$MAIN_ROOT."themes/btcs4.css.php',
-					theme_advanced_statusbar_location: 'none',
-					style_formats: [
-						{title: 'Quote', inline : 'div', classes: 'forumQuote'}
-					
-					],
 					setup: function(ed) {
 						ed.addButton('quotebbcode', {
 							
@@ -319,9 +313,6 @@ if (
 						
 						});
 					}
-					
-					
-				
 				});
 			
 				
