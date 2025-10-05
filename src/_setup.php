@@ -51,7 +51,7 @@ require_once(BASE_DIRECTORY."_functions.php");
 function BTCS4Loader($class_name) {
 	if (file_exists(BASE_DIRECTORY."classes/".strtolower($class_name).".php")) {
 		require_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
-	} elseif (file_exists(require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
+	} elseif (file_exists(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php")) {
 		require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php");
 	}
 }
