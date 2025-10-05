@@ -928,15 +928,17 @@ class Form {
 
 		$GLOBALS['richtextEditor'] = "
 			$(document).ready(function() {
-				tinymce.init({
-					selector: '#".$componentID."',
+				$('#".$componentID."').tinymce({
 					skin: '".addslashes($skin)."',
 					content_css: '".addslashes($editorCSS)."',
 					plugins: 'emoticons',
 					toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink image emoticons | quotebbcode codebbcode".$addHTML."',
 					menubar: false,
 					statusbar: false,
-					resize: true
+					resize: true,
+					setup: function(ed) {
+						// Custom setup if needed
+					}
 				});
 			});
 		";
