@@ -363,7 +363,7 @@ if ( empty($_POST['submit']) ) {
 				
 				tinymce.init({
 					selector: '#tinymceTextArea',
-					plugins: 'autolink,link,image,code,lists,textcolor,colorpicker',
+					plugins: 'autolink,link,image,code,lists',
 					toolbar: 'bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist | link unlink image code | forecolor fontselect fontsizeselect',
 					menubar: false,
 					statusbar: false,

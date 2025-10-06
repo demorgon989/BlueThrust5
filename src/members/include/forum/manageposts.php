@@ -223,6 +223,60 @@ if (
 	}
 
 	if ( empty($_POST['submit']) ) {
+		require_once("../classes/form.php");
+		$formObj = new Form();
+
+		// Detect theme and generate appropriate CSS (same as Form class)
+		$isDarkTheme = false;
+		$cssFile = BASE_DIRECTORY . "themes/".$THEME."/css.php";
+		if (file_exists($cssFile)) {
+			include($cssFile);
+			if (isset($arrCSSInfo['font-color'])) {
+				// Light colors (white, silver, etc.) suggest dark theme background
+				$lightColors = ['white', '#fff', '#ffffff', 'silver', '#c0c0c0', '#ddd', '#dddddd'];
+				$isDarkTheme = in_array(strtolower($arrCSSInfo['font-color']), $lightColors);
+			}
+		}
+		$darkCSS = "
+body, .mce-content-body {
+	background-color: #2d2d2d;
+	color: white;
+	font-family: verdana, sans-serif;
+	font-size: 11px;
+	margin: 8px;
+}
+p, div, span, td, th { color: white; }
+a { color: silver; }
+a:hover { color: #647d99; }
+blockquote {
+	background-color: #1a1a1a;
+	border-left: 3px solid #647d99;
+	padding: 10px;
+	margin: 8px 0;
+}
+";
+		$contentCSS = $isDarkTheme ? false : MAIN_ROOT."btcs4.css.php";
+		$contentStyle = $isDarkTheme ? $darkCSS : false;
+		$skin = $isDarkTheme ? 'oxide-dark' : 'oxide';
+
+		// Build TinyMCE config
+		$tinymceConfig = array(
+			'selector' => '#richTextarea',
+			'license_key' => 'gpl',
+			'skin' => $skin,
+			'plugins' => 'emoticons',
+			'toolbar' => 'bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist | link unlink emoticons | quotebbcode codebbcode',
+			'menubar' => false,
+			'statusbar' => false,
+			'resize' => true
+		);
+		if ($contentCSS) {
+			$tinymceConfig['content_css'] = $contentCSS;
+		}
+		if ($contentStyle) {
+			$tinymceConfig['content_style'] = $contentStyle;
+		}
+
 		if ($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id']) {
 			$dispEditTitle = "<input type='text' id='postSubject' name='topicname' value='".$topicPostInfo['title']."' class='textBox' style='width: 250px'>";
 		} else {
@@ -253,7 +307,7 @@ if (
 				<tr>
 					<td class='formLabel' valign='top'>Message:</td>
 					<td class='main'>
-						<textarea id='tinymceTextArea' name='wysiwygHTML' style='width: 80%' rows='15'>".$postInfo['message']."</textarea>
+						<textarea id='richTextarea' name='wysiwygHTML' style='width: 90%' rows='20'>".$postInfo['message']."</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -273,80 +327,42 @@ if (
 		<div id='previewPost'></div>
 		</form>
 		<script type='text/javascript'>
+			$(document).ready(function() {
+				$('#consoleTopBackButton').attr('href', '".$MAIN_ROOT."forum/viewtopic.php?tID=".$postInfo['forumtopic_id']."');
+				$('#consoleBottomBackButton').attr('href', '".$MAIN_ROOT."forum/viewtopic.php?tID=".$postInfo['forumtopic_id']."');
 
-			$('document').ready(function() {
-			
-			$('#consoleTopBackButton').attr('href', '".$MAIN_ROOT."forum/viewtopic.php?tID=".$postInfo['forumtopic_id']."');
-			$('#consoleBottomBackButton').attr('href', '".$MAIN_ROOT."forum/viewtopic.php?tID=".$postInfo['forumtopic_id']."');
-			
-			// Load TinyMCE if not already loaded
-			if (typeof tinymce === 'undefined') {
-				var script = document.createElement('script');
-				script.src = '".$MAIN_ROOT."js/tiny_mce/tinymce.min.js';
-				script.onload = function() {
-					initTinyMCE();
-				};
-				document.head.appendChild(script);
-			} else {
-				initTinyMCE();
-			}
-			
-			function initTinyMCE() {
-				tinymce.init({
-					selector: '#tinymceTextArea',
-					plugins: 'autolink,emoticons,link,code,lists',
-					toolbar: 'bold italic underline strikethrough | bullist numlist | link unlink emoticons | quotebbcode codebbcode',
-					menubar: false,
-					statusbar: false,
-					resize: true,
-					setup: function(ed) {
-						ed.addButton('quotebbcode', {
-							
-							title: 'Insert Quote',
-							image: '".$MAIN_ROOT."js/tiny_mce/quote.png',
-							onclick: function() {
-								ed.focus();
-								innerText = ed.selection.getContent();
-								
-								ed.selection.setContent('[quote]'+innerText+'[/quote]');
-							}
-						});
-						
-						ed.addButton('codebbcode', {
-							
-							title: 'Insert Code',
-							image: '".$MAIN_ROOT."js/tiny_mce/code.png',
-							onclick: function() {
-								ed.focus();
-								innerText = ed.selection.getContent();
-								
-								ed.selection.setContent('[code]'+innerText+'[/code]');
-							}
-						
-						});
+				// Initialize TinyMCE for the textarea (same as Form class)
+				setTimeout(function() {
+					if (typeof tinymce !== 'undefined' && !tinymce.get('richTextarea')) {
+						var config = {
+							selector: '#richTextarea',
+							license_key: 'gpl',
+							skin: '".addslashes($skin)."',
+							plugins: 'emoticons',
+							toolbar: 'bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist | link unlink emoticons | quotebbcode codebbcode',
+							menubar: false,
+							statusbar: false,
+							resize: true
+						};
+						".($contentCSS ? "config.content_css = '".addslashes($contentCSS)."';" : "")."
+						".($contentStyle ? "config.content_style = ".json_encode($contentStyle).";" : "")."
+						tinymce.init(config);
 					}
-				});
-			}
-			
-				
+				}, 100);
+
 				$('#btnPreview').click(function() {
-				
 					$('#loadingSpiral').show();
-					$.post('".$MAIN_ROOT."members/include/forum/include/previewpost.php', { wysiwygHTML: $('#tinymceTextArea').val(), previewSubject: $('[name=\"topicname\"]').val() }, function(data) {
+					$.post('".$MAIN_ROOT."members/include/forum/include/previewpost.php', { wysiwygHTML: $('#richTextarea').val(), previewSubject: $('[name=\"topicname\"]').val() }, function(data) {
 						$('#previewPost').hide();
 						$('#previewPost').html(data);
 						$('#loadingSpiral').hide();
 						$('#previewPost').fadeIn(250);
-					
+
 						$('html, body').animate({
 							scrollTop:$('#previewPost').offset().top
 						}, 1000);
-						
 					});
-				
 				});
-				
-				
 			});
 		</script>
 		

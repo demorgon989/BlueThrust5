@@ -60,7 +60,7 @@ if (isset($_GET['cID']) && $consoleInfo['pagetitle'] === '-separator-') {
 	exit;
 }
 
-$arrTinyMCEPages = ["Manage News", "Post News", "Add Custom Page", "Manage Custom Pages", "Add Custom Form Page", "Manage Custom Form Pages", "Post Topic", "Add Menu Item", "Add Menu Category", "Manage Menu Categories", "Manage Menu Items", "Edit Profile"];
+$arrTinyMCEPages = ["Manage News", "Post News", "Add Custom Page", "Manage Custom Pages", "Add Custom Form Page", "Manage Custom Form Pages", "Post Topic", "Manage Forum Posts", "Add Menu Item", "Add Menu Category", "Manage Menu Categories", "Manage Menu Items", "Edit Profile"];
 $arrAceEditorPages = ["Modify Current Theme", "Add Menu Category", "Add Menu Item", "Manage Menu Categories", "Manage Menu Items"];
 
 
