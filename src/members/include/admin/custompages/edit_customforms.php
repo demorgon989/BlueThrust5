@@ -290,17 +290,6 @@ if ( empty($_POST['submit']) ) {
 					statusbar: false,
 					resize: true
 				});
-				
-				setTimeout(function() {
-					tinymce.init({
-						selector: '#tinymceSubmitMessage',
-						plugins: 'autolink',
-						toolbar: 'bold italic underline',
-						menubar: false,
-						statusbar: false,
-						resize: true
-					});
-				}, 100);
 			
 				
 				$('#loadingSpiral').show();
